@@ -38,4 +38,5 @@ if __name__ == "__main__":
     for prueba, filas in pruebas_calidad(con).items():
         print(f"{'OK   ' if filas == 0 else 'FALLA'} {prueba} ({filas} filas)")
         fallos += filas > 0
+    print(con.sql("SELECT * FROM gold.conciliacion ORDER BY fuente"))
     sys.exit(1 if fallos else 0)
