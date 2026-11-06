@@ -1,0 +1,34 @@
+-- Grano: una línea de venta real (sin duplicados ni cuarentena), valorada en USD.
+CREATE OR REPLACE TABLE silver.ventas AS
+WITH ventas AS (
+    SELECT * FROM silver.lineas_clasificadas WHERE destino = 'venta'
+),
+-- Si un día no hay tasa publicada, vale la última anterior.
+tasa_usd AS (
+    SELECT v.id_venta, t.fecha AS fecha_tasa, t.cup_por_unidad AS cup_por_usd
+    FROM ventas v JOIN silver.tasas t ON t.moneda = 'USD' AND t.fecha <= v.fecha
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY v.id_venta ORDER BY t.fecha DESC) = 1
+),
+tasa_mlc AS (
+    SELECT v.id_venta, t.cup_por_unidad AS cup_por_mlc
+    FROM ventas v JOIN silver.tasas t ON t.moneda = 'MLC' AND t.fecha <= v.fecha
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY v.id_venta ORDER BY t.fecha DESC) = 1
+),
+-- El costo de una venta es el de la última compra de ese producto en o antes de ese día.
+costo AS (
+    SELECT v.id_venta, c.costo_unitario_usd
+    FROM ventas v JOIN silver.costos c ON c.sku = v.sku AND c.fecha <= v.fecha
+    QUALIFY ROW_NUMBER() OVER (PARTITION BY v.id_venta ORDER BY c.fecha DESC) = 1
+)
+SELECT v.id_venta, v.fuente, v.fecha, v.cliente, v.sku, v.cantidad, v.precio_unitario, v.moneda,
+       tu.fecha_tasa, tu.cup_por_usd, tm.cup_por_mlc, c.costo_unitario_usd,
+       CAST(v.cantidad * v.precio_unitario * CASE v.moneda
+           WHEN 'USD' THEN 1
+           WHEN 'MLC' THEN tm.cup_por_mlc / tu.cup_por_usd
+           ELSE 1 / tu.cup_por_usd   -- CUP y transferencia valen igual
+       END AS DECIMAL(14, 2)) AS ingreso_usd,
+       CAST(v.cantidad * c.costo_unitario_usd AS DECIMAL(14, 2)) AS costo_usd
+FROM ventas v
+LEFT JOIN tasa_usd tu USING (id_venta)
+LEFT JOIN tasa_mlc tm USING (id_venta)
+LEFT JOIN costo c USING (id_venta);
