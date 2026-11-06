@@ -1,0 +1,3 @@
+-- Toda venta tiene tasa del día (o anterior) y costo de compra.
+SELECT id_venta, fecha, sku FROM silver.ventas
+WHERE cup_por_usd IS NULL OR costo_unitario_usd IS NULL OR (moneda = 'MLC' AND cup_por_mlc IS NULL)
