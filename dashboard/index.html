@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La Ceiba · Margen real</title>
+<style>
+:root { --fondo:#f7f7f4; --tarjeta:#fff; --texto:#1d1d1b; --suave:#6b6b66; --linea:#e3e3de; --verde:#2f7d5b; --rojo:#c2412d; --ambar:#f3e2b8; --rojo-claro:#f6d5cf; }
+@media (prefers-color-scheme: dark) { :root { --fondo:#161615; --tarjeta:#21211f; --texto:#ededea; --suave:#a3a39d; --linea:#34342f; --verde:#4fae84; --rojo:#e3674f; --ambar:#5a4a1f; --rojo-claro:#5c2a22; } }
+body { margin:0; background:var(--fondo); color:var(--texto); font:15px/1.45 system-ui, sans-serif; }
+main { max-width:980px; margin:0 auto; padding:24px 16px 48px; }
+h1 { margin:0 0 4px; font-size:24px; } h2 { font-size:17px; margin:0 0 4px; }
+p.nota { color:var(--suave); margin:0 0 16px; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:20px 0; }
+.kpi, section { background:var(--tarjeta); border:1px solid var(--linea); border-radius:10px; padding:16px; }
+section { margin-bottom:16px; overflow-x:auto; }
+.kpi span { color:var(--suave); font-size:13px; } .kpi b { display:block; font-size:24px; font-variant-numeric:tabular-nums; }
+.fila { display:grid; grid-template-columns:170px 1fr 64px; gap:4px 10px; align-items:center; margin:8px 0; }
+.fila small { grid-column:2 / 4; color:var(--suave); margin-top:-4px; }
+.pista { background:var(--linea); border-radius:4px; height:12px; }
+.barra { background:var(--verde); height:100%; border-radius:4px; } .barra.neg { background:var(--rojo); }
+.fila b { text-align:right; font-variant-numeric:tabular-nums; }
+table { border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:14px; }
+th, td { padding:6px 8px; border-bottom:1px solid var(--linea); text-align:right; white-space:nowrap; }
+th:first-child, td:first-child { text-align:left; }
+td.bajo { background:var(--ambar); } td.neg { background:var(--rojo-claro); color:var(--rojo); font-weight:600; }
+@media (max-width:560px) { .fila { grid-template-columns:110px 1fr 56px; } }
+</style></head><body><main>
+<h1>La Ceiba · margen real en USD</h1>
+<p class="nota">Mayo–octubre 2026. Todo convertido a USD con la tasa informal del día de la venta. Datos sintéticos.</p>
+<div class="kpis">
+  <div class="kpi"><span>Ingreso</span><b>152 905 USD</b></div>
+  <div class="kpi"><span>Margen</span><b>24 146 USD</b></div>
+  <div class="kpi"><span>Margen sobre ingreso</span><b>15.8 %</b></div>
+</div>
+<section><h2>Margen por producto</h2><p class="nota">Ordenado de peor a mejor.</p><div class="fila"><span>Aceite vegetal 1 L</span><div class="pista"><div class="barra" style="width:33.5%"></div></div><b>6.0 %</b><small>10 545 USD · 190 ventas bajo costo</small></div><div class="fila"><span>Café molido 250 g</span><div class="pista"><div class="barra" style="width:83.9%"></div></div><b>14.9 %</b><small>11 169 USD</small></div><div class="fila"><span>Espagueti 500 g</span><div class="pista"><div class="barra" style="width:87.1%"></div></div><b>15.5 %</b><small>3 842 USD</small></div><div class="fila"><span>Salchichas paquete</span><div class="pista"><div class="barra" style="width:89.7%"></div></div><b>16.0 %</b><small>9 127 USD</small></div><div class="fila"><span>Azúcar 1 kg</span><div class="pista"><div class="barra" style="width:90.3%"></div></div><b>16.1 %</b><small>5 132 USD</small></div><div class="fila"><span>Pollo caja 10 lb</span><div class="pista"><div class="barra" style="width:92.9%"></div></div><b>16.5 %</b><small>63 642 USD</small></div><div class="fila"><span>Frijol negro 1 kg</span><div class="pista"><div class="barra" style="width:93.2%"></div></div><b>16.6 %</b><small>6 960 USD</small></div><div class="fila"><span>Leche en polvo 1 kg</span><div class="pista"><div class="barra" style="width:95.4%"></div></div><b>17.0 %</b><small>32 517 USD</small></div><div class="fila"><span>Puré de tomate 400 g</span><div class="pista"><div class="barra" style="width:97.5%"></div></div><b>17.4 %</b><small>4 424 USD</small></div><div class="fila"><span>Arroz 1 kg</span><div class="pista"><div class="barra" style="width:100.0%"></div></div><b>17.8 %</b><small>5 546 USD</small></div></section>
+<section><h2>Margen % por mes</h2><p class="nota">Ámbar: menos de 10 %. Rojo: se vende por debajo del costo.</p>
+<table><tr><th>Producto</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th><th>2026-09</th><th>2026-10</th></tr><tr><th>Aceite vegetal 1 L</th><td class="">16.8</td><td class="">15.1</td><td class="bajo">6.9</td><td class="bajo">4.3</td><td class="neg">-5.1</td><td class="neg">-9.9</td></tr><tr><th>Café molido 250 g</th><td class="">16.7</td><td class="">14.7</td><td class="">14.4</td><td class="">14.7</td><td class="">14.5</td><td class="">14.3</td></tr><tr><th>Espagueti 500 g</th><td class="">16.0</td><td class="">16.1</td><td class="">17.2</td><td class="">13.4</td><td class="">16.5</td><td class="">14.3</td></tr><tr><th>Salchichas paquete</th><td class="">17.1</td><td class="">16.5</td><td class="">15.4</td><td class="">16.8</td><td class="">16.1</td><td class="">14.0</td></tr><tr><th>Azúcar 1 kg</th><td class="">15.9</td><td class="">15.6</td><td class="">19.4</td><td class="">16.8</td><td class="">14.8</td><td class="">12.6</td></tr><tr><th>Pollo caja 10 lb</th><td class="">16.4</td><td class="">16.6</td><td class="">14.7</td><td class="">18.3</td><td class="">18.2</td><td class="">12.8</td></tr><tr><th>Frijol negro 1 kg</th><td class="">16.6</td><td class="">16.0</td><td class="">17.1</td><td class="">17.9</td><td class="">17.0</td><td class="">15.2</td></tr><tr><th>Leche en polvo 1 kg</th><td class="">15.9</td><td class="">15.4</td><td class="">15.9</td><td class="">20.2</td><td class="">16.6</td><td class="">17.5</td></tr><tr><th>Puré de tomate 400 g</th><td class="">18.8</td><td class="">16.3</td><td class="">18.1</td><td class="">16.3</td><td class="">17.6</td><td class="">17.7</td></tr><tr><th>Arroz 1 kg</th><td class="">16.7</td><td class="">18.2</td><td class="">18.7</td><td class="">19.1</td><td class="">17.1</td><td class="">17.1</td></tr></table></section>
+<section><h2>Conciliación: ¿cuadra con los archivos?</h2><p class="nota">Cada fila de bronze termina en exactamente un destino.</p>
+<table><tr><th>fuente</th><th>filas_bronze</th><th>ventas</th><th>descartado</th><th>cuarentena</th><th>duplicado_exacto</th><th>duplicado_cruzado</th><th>cuadra</th></tr><tr><td>almacen</td><td>680</td><td>679</td><td>0</td><td>1</td><td>0</td><td>0</td><td>sí</td></tr><tr><td>pos</td><td>3775</td><td>3748</td><td>0</td><td>27</td><td>0</td><td>0</td><td>sí</td></tr><tr><td>whatsapp</td><td>850</td><td>544</td><td>23</td><td>1</td><td>34</td><td>248</td><td>sí</td></tr></table></section>
+</main></body></html>
