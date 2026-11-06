@@ -78,7 +78,7 @@ Los tests de [`tests/`](tests) prueban cada regla con archivos de 1 o 2 filas he
 ## Decisiones y límites conocidos
 
 - **DuckDB en lugar de BigQuery** para que corra en cualquier laptop. El SQL usa CTEs, `QUALIFY` y funciones de ventana que existen en los dos. Lo que cambia al migrar es `read_csv` (en BigQuery sería una tabla externa sobre el bucket), `strip_accents` y `regexp_extract` con número de grupo.
-- **Dashboard en HTML estático** generado desde gold, sin dependencias: donas de ingreso por moneda y por canal, evolución semanal del margen, barras por producto y tabla mensual, con animaciones (que respetan `prefers-reduced-motion`), tooltips y modo oscuro. En la empresa sería una página de Looker Studio sobre las mismas tablas.
+- **Dashboard en HTML estático** generado desde gold, sin dependencias, siguiendo las guías de diseño de Apple: barra de navegación translúcida, la línea del aceite como gráfico principal con anotaciones, donas de ingreso por moneda y canal, barras por producto y tabla mensual. Tiene una sola animación principal (la línea se dibuja al abrir), respeta `prefers-reduced-motion` y `prefers-reduced-transparency`, se usa con teclado, tiene modo oscuro y todo el texto pasa 4,5:1 de contraste. En la empresa sería una página de Looker Studio sobre las mismas tablas.
 - **Duplicado cruzado:** si el almacén anota el pedido al día siguiente, no se detecta. Se podría ampliar la ventana a ±1 día a cambio de más falsos positivos.
 - **Transferencia = efectivo:** en la calle el CUP por transferencia a veces vale menos. Si el negocio lo pide, se añade una tasa propia.
 
