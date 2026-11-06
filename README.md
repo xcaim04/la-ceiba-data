@@ -29,6 +29,7 @@ uv run pytest
 | silver | `lineas_clasificadas` | una fila de bronze | Une las tres fuentes, normaliza y le asigna a cada fila **un destino**. |
 | silver | `ventas` | una línea de venta real | Solo las ventas válidas y únicas, valoradas en USD con su tasa y su costo. |
 | gold | `margen_producto_semana` | producto × semana | Ingreso, costo y margen en USD; líneas vendidas por debajo del costo. |
+| gold | `ingreso_por_canal` | mes × fuente × moneda | Ingreso y margen en USD por canal de venta y por moneda de cobro. |
 | gold | `conciliacion` | fuente | Filas de bronze contra destinos en silver: comprueba que cuadra. |
 
 ## Reglas (una frase cada una)
@@ -56,6 +57,7 @@ Cada archivo de [`sql/calidad/`](sql/calidad) devuelve las filas que rompen una 
 | `montos_positivos` | Que no haya ingresos ni costos en cero o negativos. |
 | `conciliacion_cuadra` | Que ninguna fila de bronze se pierda entre capas. |
 | `gold_cuadra_con_silver` | Que el total de gold sea exactamente el de silver. |
+| `gold_canal_cuadra_con_silver` | Lo mismo para el ingreso por canal y moneda. |
 | `cuarentena_bajo_umbral` | Que, si más del 3 % de una fuente cae en cuarentena, se pare: el archivo viene roto. |
 
 Los tests de [`tests/`](tests) prueban cada regla con archivos de 1 o 2 filas hechos a mano, y además corren el pipeline completo con dos semillas distintas.
@@ -76,7 +78,7 @@ Los tests de [`tests/`](tests) prueban cada regla con archivos de 1 o 2 filas he
 ## Decisiones y límites conocidos
 
 - **DuckDB en lugar de BigQuery** para que corra en cualquier laptop. El SQL usa CTEs, `QUALIFY` y funciones de ventana que existen en los dos. Lo que cambia al migrar es `read_csv` (en BigQuery sería una tabla externa sobre el bucket), `strip_accents` y `regexp_extract` con número de grupo.
-- **Dashboard en HTML estático** generado desde gold. En la empresa sería una página de Looker Studio sobre las mismas tablas.
+- **Dashboard en HTML estático** generado desde gold, sin dependencias, siguiendo las guías de diseño de Apple: barra de navegación translúcida, la línea del aceite como gráfico principal con anotaciones, donas de ingreso por moneda y canal, barras por producto y tabla mensual. Tiene una sola animación principal (la línea se dibuja al abrir), respeta `prefers-reduced-motion` y `prefers-reduced-transparency`, se usa con teclado, tiene modo oscuro y todo el texto pasa 4,5:1 de contraste. En la empresa sería una página de Looker Studio sobre las mismas tablas.
 - **Duplicado cruzado:** si el almacén anota el pedido al día siguiente, no se detecta. Se podría ampliar la ventana a ±1 día a cambio de más falsos positivos.
 - **Transferencia = efectivo:** en la calle el CUP por transferencia a veces vale menos. Si el negocio lo pide, se añade una tasa propia.
 

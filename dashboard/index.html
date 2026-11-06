@@ -1,38 +1,273 @@
 <!doctype html>
 <html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
 <title>La Ceiba · Margen real</title>
 <style>
-:root { --fondo:#f7f7f4; --tarjeta:#fff; --texto:#1d1d1b; --suave:#6b6b66; --linea:#e3e3de; --verde:#2f7d5b; --rojo:#c2412d; --ambar:#f3e2b8; --rojo-claro:#f6d5cf; }
-@media (prefers-color-scheme: dark) { :root { --fondo:#161615; --tarjeta:#21211f; --texto:#ededea; --suave:#a3a39d; --linea:#34342f; --verde:#4fae84; --rojo:#e3674f; --ambar:#5a4a1f; --rojo-claro:#5c2a22; } }
-body { margin:0; background:var(--fondo); color:var(--texto); font:15px/1.45 system-ui, sans-serif; }
-main { max-width:980px; margin:0 auto; padding:24px 16px 48px; }
-h1 { margin:0 0 4px; font-size:24px; } h2 { font-size:17px; margin:0 0 4px; }
-p.nota { color:var(--suave); margin:0 0 16px; }
-.kpis { display:grid; grid-template-columns:repeat(auto-fit, minmax(180px, 1fr)); gap:12px; margin:20px 0; }
-.kpi, section { background:var(--tarjeta); border:1px solid var(--linea); border-radius:10px; padding:16px; }
-section { margin-bottom:16px; overflow-x:auto; }
-.kpi span { color:var(--suave); font-size:13px; } .kpi b { display:block; font-size:24px; font-variant-numeric:tabular-nums; }
-.fila { display:grid; grid-template-columns:170px 1fr 64px; gap:4px 10px; align-items:center; margin:8px 0; }
-.fila small { grid-column:2 / 4; color:var(--suave); margin-top:-4px; }
-.pista { background:var(--linea); border-radius:4px; height:12px; }
-.barra { background:var(--verde); height:100%; border-radius:4px; } .barra.neg { background:var(--rojo); }
-.fila b { text-align:right; font-variant-numeric:tabular-nums; }
-table { border-collapse:collapse; width:100%; font-variant-numeric:tabular-nums; font-size:14px; }
-th, td { padding:6px 8px; border-bottom:1px solid var(--linea); text-align:right; white-space:nowrap; }
-th:first-child, td:first-child { text-align:left; }
-td.bajo { background:var(--ambar); } td.neg { background:var(--rojo-claro); color:var(--rojo); font-weight:600; }
-@media (max-width:560px) { .fila { grid-template-columns:110px 1fr 56px; } }
-</style></head><body><main>
-<h1>La Ceiba · margen real en USD</h1>
-<p class="nota">Mayo–octubre 2026. Todo convertido a USD con la tasa informal del día de la venta. Datos sintéticos.</p>
-<div class="kpis">
-  <div class="kpi"><span>Ingreso</span><b>152 905 USD</b></div>
-  <div class="kpi"><span>Margen</span><b>24 146 USD</b></div>
-  <div class="kpi"><span>Margen sobre ingreso</span><b>15.8 %</b></div>
-</div>
-<section><h2>Margen por producto</h2><p class="nota">Ordenado de peor a mejor.</p><div class="fila"><span>Aceite vegetal 1 L</span><div class="pista"><div class="barra" style="width:33.5%"></div></div><b>6.0 %</b><small>10 545 USD · 190 ventas bajo costo</small></div><div class="fila"><span>Café molido 250 g</span><div class="pista"><div class="barra" style="width:83.9%"></div></div><b>14.9 %</b><small>11 169 USD</small></div><div class="fila"><span>Espagueti 500 g</span><div class="pista"><div class="barra" style="width:87.1%"></div></div><b>15.5 %</b><small>3 842 USD</small></div><div class="fila"><span>Salchichas paquete</span><div class="pista"><div class="barra" style="width:89.7%"></div></div><b>16.0 %</b><small>9 127 USD</small></div><div class="fila"><span>Azúcar 1 kg</span><div class="pista"><div class="barra" style="width:90.3%"></div></div><b>16.1 %</b><small>5 132 USD</small></div><div class="fila"><span>Pollo caja 10 lb</span><div class="pista"><div class="barra" style="width:92.9%"></div></div><b>16.5 %</b><small>63 642 USD</small></div><div class="fila"><span>Frijol negro 1 kg</span><div class="pista"><div class="barra" style="width:93.2%"></div></div><b>16.6 %</b><small>6 960 USD</small></div><div class="fila"><span>Leche en polvo 1 kg</span><div class="pista"><div class="barra" style="width:95.4%"></div></div><b>17.0 %</b><small>32 517 USD</small></div><div class="fila"><span>Puré de tomate 400 g</span><div class="pista"><div class="barra" style="width:97.5%"></div></div><b>17.4 %</b><small>4 424 USD</small></div><div class="fila"><span>Arroz 1 kg</span><div class="pista"><div class="barra" style="width:100.0%"></div></div><b>17.8 %</b><small>5 546 USD</small></div></section>
-<section><h2>Margen % por mes</h2><p class="nota">Ámbar: menos de 10 %. Rojo: se vende por debajo del costo.</p>
-<table><tr><th>Producto</th><th>2026-05</th><th>2026-06</th><th>2026-07</th><th>2026-08</th><th>2026-09</th><th>2026-10</th></tr><tr><th>Aceite vegetal 1 L</th><td class="">16.8</td><td class="">15.1</td><td class="bajo">6.9</td><td class="bajo">4.3</td><td class="neg">-5.1</td><td class="neg">-9.9</td></tr><tr><th>Café molido 250 g</th><td class="">16.7</td><td class="">14.7</td><td class="">14.4</td><td class="">14.7</td><td class="">14.5</td><td class="">14.3</td></tr><tr><th>Espagueti 500 g</th><td class="">16.0</td><td class="">16.1</td><td class="">17.2</td><td class="">13.4</td><td class="">16.5</td><td class="">14.3</td></tr><tr><th>Salchichas paquete</th><td class="">17.1</td><td class="">16.5</td><td class="">15.4</td><td class="">16.8</td><td class="">16.1</td><td class="">14.0</td></tr><tr><th>Azúcar 1 kg</th><td class="">15.9</td><td class="">15.6</td><td class="">19.4</td><td class="">16.8</td><td class="">14.8</td><td class="">12.6</td></tr><tr><th>Pollo caja 10 lb</th><td class="">16.4</td><td class="">16.6</td><td class="">14.7</td><td class="">18.3</td><td class="">18.2</td><td class="">12.8</td></tr><tr><th>Frijol negro 1 kg</th><td class="">16.6</td><td class="">16.0</td><td class="">17.1</td><td class="">17.9</td><td class="">17.0</td><td class="">15.2</td></tr><tr><th>Leche en polvo 1 kg</th><td class="">15.9</td><td class="">15.4</td><td class="">15.9</td><td class="">20.2</td><td class="">16.6</td><td class="">17.5</td></tr><tr><th>Puré de tomate 400 g</th><td class="">18.8</td><td class="">16.3</td><td class="">18.1</td><td class="">16.3</td><td class="">17.6</td><td class="">17.7</td></tr><tr><th>Arroz 1 kg</th><td class="">16.7</td><td class="">18.2</td><td class="">18.7</td><td class="">19.1</td><td class="">17.1</td><td class="">17.1</td></tr></table></section>
-<section><h2>Conciliación: ¿cuadra con los archivos?</h2><p class="nota">Cada fila de bronze termina en exactamente un destino.</p>
-<table><tr><th>fuente</th><th>filas_bronze</th><th>ventas</th><th>descartado</th><th>cuarentena</th><th>duplicado_exacto</th><th>duplicado_cruzado</th><th>cuadra</th></tr><tr><td>almacen</td><td>680</td><td>679</td><td>0</td><td>1</td><td>0</td><td>0</td><td>sí</td></tr><tr><td>pos</td><td>3775</td><td>3748</td><td>0</td><td>27</td><td>0</td><td>0</td><td>sí</td></tr><tr><td>whatsapp</td><td>850</td><td>544</td><td>23</td><td>1</td><td>34</td><td>248</td><td>sí</td></tr></table></section>
-</main></body></html>
+:root {
+  --fondo:#f5f5f7; --tarjeta:#ffffff; --tinta:#1d1d1f; --tinta-2:#6e6e73; --separador:rgba(0,0,0,.08);
+  --acento:#0066cc; --senal:#bf4a12; --critico:#c4321f; --critico-fondo:#fdecea; --aviso-fondo:#fff4d6; --bien:#1a7f37;
+  --material:rgba(245,245,247,.72); --sombra:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    --fondo:#000000; --tarjeta:#1c1c1e; --tinta:#f5f5f7; --tinta-2:#a1a1a6; --separador:rgba(255,255,255,.10);
+    --acento:#4da3ff; --senal:#f08a4b; --critico:#ff6b5e; --critico-fondo:#3a1c1a; --aviso-fondo:#3a2f12; --bien:#3fb950;
+    --material:rgba(22,22,23,.72); --sombra:none;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  }
+}
+:root[data-theme="dark"] {
+  --fondo:#000000; --tarjeta:#1c1c1e; --tinta:#f5f5f7; --tinta-2:#a1a1a6; --separador:rgba(255,255,255,.10);
+  --acento:#4da3ff; --senal:#f08a4b; --critico:#ff6b5e; --critico-fondo:#3a1c1a; --aviso-fondo:#3a2f12; --bien:#3fb950;
+  --material:rgba(22,22,23,.72); --sombra:none;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+}
+* { box-sizing:border-box; }
+html { scroll-behavior:smooth; scroll-padding-top:72px; -webkit-text-size-adjust:100%; }
+body { margin:0; background:var(--fondo); color:var(--tinta);
+  font:400 1.0625rem/1.47 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
+  -webkit-font-smoothing:antialiased; letter-spacing:-.01em; }
+.oculto { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+:focus-visible { outline:3px solid var(--acento); outline-offset:3px; border-radius:6px; }
+
+/* Capa funcional: barra flotante translúcida; el contenido pasa por debajo. */
+.navegacion { position:sticky; top:0; z-index:5; background:var(--material); border-bottom:1px solid var(--separador);
+  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); }
+.navegacion > div { max-width:1080px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:16px; }
+.marca { font-weight:600; font-size:1.0625rem; margin-right:auto; white-space:nowrap; }
+.segmentos { display:flex; gap:2px; padding:2px; border-radius:9px; background:var(--separador); overflow-x:auto; scrollbar-width:none; }
+.segmentos a { color:var(--tinta); text-decoration:none; font-size:.8125rem; font-weight:500; padding:6px 12px; border-radius:7px; white-space:nowrap; min-height:28px; transition:background .2s; }
+.segmentos a[aria-current="true"] { background:var(--tarjeta); box-shadow:0 1px 3px rgba(0,0,0,.12); }
+@media (prefers-reduced-transparency: reduce) { .navegacion { background:var(--fondo); backdrop-filter:none; -webkit-backdrop-filter:none; } }
+
+main { max-width:1080px; margin:0 auto; padding:0 16px 64px; }
+section { padding-top:56px; }
+.cabecera { padding:48px 0 8px; }
+.ceja { color:var(--senal); font-size:.9375rem; font-weight:600; margin:0 0 8px; }
+h1 { font:700 clamp(2rem, 5vw, 3rem)/1.08 -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  letter-spacing:-.025em; margin:0; max-width:22ch; text-wrap:balance; }
+.cabecera p { color:var(--tinta-2); font-size:1.1875rem; max-width:40em; margin:14px 0 0; text-wrap:pretty; }
+h2 { font-size:1.75rem; line-height:1.15; letter-spacing:-.02em; margin:0 0 6px; }
+h3 { font-size:1.0625rem; margin:0; }
+.intro { color:var(--tinta-2); margin:0 0 20px; max-width:44em; }
+.tarjeta { background:var(--tarjeta); border-radius:18px; box-shadow:var(--sombra); padding:24px; }
+
+/* Firma: la historia del aceite. */
+.historia { margin-top:28px; padding:24px 24px 16px; overflow-x:auto; }
+.historia-cabeza { display:flex; flex-wrap:wrap; justify-content:space-between; gap:12px 24px; align-items:flex-end; margin-bottom:8px; }
+.leyenda-linea { display:flex; gap:20px; font-size:.8125rem; color:var(--tinta-2); margin:0; padding:0; list-style:none; }
+.leyenda-linea i { display:inline-block; width:18px; height:3px; border-radius:2px; vertical-align:middle; margin-right:8px; }
+.linea { width:100%; min-width:600px; height:auto; display:block; font-family:inherit; }
+.grilla { stroke:var(--separador); } .cero { stroke:var(--tinta-2); stroke-width:1; opacity:.5; }
+.eje { fill:var(--tinta-2); font-size:12px; }
+.eje.perdida { fill:var(--critico); font-weight:600; }
+.zona-perdida { fill:var(--critico-fondo); }
+.l-aceite, .l-resto { fill:none; stroke-linejoin:round; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; }
+.l-aceite { stroke:var(--senal); stroke-width:3; }
+.l-resto { stroke:var(--tinta-2); stroke-width:2; opacity:.55; }
+.notas { opacity:0; }
+.nota-punto { fill:var(--senal); stroke:var(--tarjeta); stroke-width:2.5; }
+.nota-texto { font-size:13px; font-weight:600; fill:var(--tinta); }
+.listo .l-aceite, .listo .l-resto { animation:dibujar 1.2s cubic-bezier(.33,1,.68,1) forwards; }
+.listo .l-resto { animation-duration:.9s; }
+.listo .notas { animation:aparecer .35s 1.15s forwards; }
+.punto .golpe { fill:transparent; } .punto .guia { stroke:var(--tinta-2); opacity:0; }
+.punto circle { opacity:0; stroke:var(--tarjeta); stroke-width:2; }
+.p-aceite { fill:var(--senal); } .p-resto { fill:var(--tinta-2); }
+.punto:hover circle, .punto:hover .guia { opacity:1; }
+.punto:hover .guia { opacity:.35; }
+
+/* Resumen en una sola tarjeta agrupada. */
+.cifras { display:grid; grid-template-columns:repeat(4, 1fr); margin-top:16px; padding:0; }
+.cifras div { padding:20px 24px; border-left:1px solid var(--separador); }
+.cifras div:first-child { border-left:0; }
+.cifras dt { color:var(--tinta-2); font-size:.8125rem; font-weight:500; }
+.cifras dd { margin:4px 0 0; font-size:1.75rem; font-weight:600; letter-spacing:-.02em; line-height:1.15; }
+.cifras dd.critico { color:var(--critico); }
+.cifras small { display:block; color:var(--tinta-2); font-size:.8125rem; margin-top:2px; }
+@media (max-width:760px) {
+  .cifras { grid-template-columns:1fr 1fr; }
+  .cifras div:nth-child(3) { border-left:0; }
+  .cifras div:nth-child(n+3) { border-top:1px solid var(--separador); }
+}
+
+.par { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:16px; }
+.resumen { color:var(--tinta-2); font-size:.9375rem; margin:4px 0 0; }
+.dona-cuerpo { display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:16px; }
+.dona svg { width:148px; height:148px; flex:none; }
+.seg { fill:none; transition:stroke-dasharray .8s cubic-bezier(.33,1,.68,1), opacity .2s; }
+.leyenda { flex:1; min-width:200px; border-collapse:collapse; font-size:.9375rem; }
+.leyenda th, .leyenda td { padding:8px 0; border-bottom:1px solid var(--separador); font-weight:400; text-align:left; }
+.leyenda td { text-align:right; color:var(--tinta-2); padding-left:12px; white-space:nowrap; }
+.leyenda td b { color:var(--tinta); font-weight:600; }
+.leyenda tr:last-child th, .leyenda tr:last-child td { border-bottom:0; }
+.leyenda i { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:10px; vertical-align:baseline; }
+.leyenda tr { cursor:default; }
+
+.barras { list-style:none; margin:0; padding:8px 24px; }
+.barras li { display:grid; grid-template-columns:minmax(120px, 190px) 1fr 72px; gap:2px 16px; align-items:center;
+  padding:12px 0; border-bottom:1px solid var(--separador); }
+.barras li:last-child { border-bottom:0; }
+.barras small { grid-column:2 / 4; color:var(--tinta-2); font-size:.8125rem; }
+.barras em { color:var(--critico); font-style:normal; font-weight:600; }
+.barras b { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; }
+.barras .alerta b { color:var(--critico); }
+.pista { height:8px; border-radius:4px; background:var(--separador); overflow:hidden; }
+.barra { display:block; height:100%; width:var(--w); background:var(--acento); border-radius:4px; transform-origin:left; }
+.barras .alerta .barra { background:var(--critico); }
+.crece .barra { transform:scaleX(0); }
+.crece.visible .barra { transform:none; transition:transform .7s cubic-bezier(.33,1,.68,1); }
+
+.tabla { margin-top:16px; padding:8px 0; overflow-x:auto; }
+table.datos { border-collapse:collapse; width:100%; font-size:.9375rem; font-variant-numeric:tabular-nums; }
+.datos th, .datos td { padding:10px 16px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--separador); }
+.datos thead th { color:var(--tinta-2); font-weight:500; font-size:.8125rem; }
+.datos th:first-child { text-align:left; padding-left:24px; } .datos td:last-child, .datos th:last-child { padding-right:24px; }
+.datos tbody th { font-weight:500; }
+.datos tbody tr:last-child th, .datos tbody tr:last-child td { border-bottom:0; }
+.datos td.bajo { background:var(--aviso-fondo); }
+.datos td.neg { background:var(--critico-fondo); color:var(--critico); font-weight:600; }
+.no { color:var(--critico); }
+
+.estado { display:flex; gap:16px; align-items:center; }
+.estado-icono { flex:none; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:var(--bien); color:#fff; font-size:1.25rem; font-weight:700; }
+.estado-icono.mal { background:var(--critico); }
+.estado p { margin:2px 0 0; color:var(--tinta-2); font-size:.9375rem; }
+footer { color:var(--tinta-2); font-size:.8125rem; padding:40px 0 0; border-top:1px solid var(--separador); margin-top:56px; }
+
+#tip { position:fixed; pointer-events:none; z-index:10; background:var(--tinta); color:var(--fondo); font-size:.8125rem;
+  font-weight:500; padding:8px 12px; border-radius:10px; opacity:0; transition:opacity .15s; max-width:300px; box-shadow:0 8px 24px rgba(0,0,0,.18); }
+@keyframes dibujar { to { stroke-dashoffset:0; } }
+@keyframes aparecer { to { opacity:1; } }
+@media (max-width:480px) { .marca { display:none; } .segmentos { margin:0 auto; } }
+@media (max-width:560px) { .barras li { grid-template-columns:1fr 64px; } .barras .pista { grid-column:1 / 3; grid-row:2; } .barras small { grid-column:1 / 3; } }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior:auto; }
+  *, *::before, *::after { animation-duration:0s !important; animation-delay:0s !important; transition-duration:0s !important; }
+  .crece .barra { transform:none; }
+}
+</style></head><body>
+<nav class="navegacion" aria-label="Secciones"><div>
+  <span class="marca">La Ceiba</span>
+  <div class="segmentos">
+    <a href="#resumen" aria-current="true">Resumen</a><a href="#ingresos">Ingresos</a><a href="#productos">Productos</a><a href="#calidad">Calidad</a>
+  </div>
+</div></nav>
+<main>
+<section id="resumen" class="cabecera">
+  <p class="ceja">Informe de margen · mayo a octubre de 2026</p>
+  <h1>El aceite pasó de ganar 16,8 % en mayo a perder 9,9 % en octubre.</h1>
+  <p>Su precio en CUP no se reajustó mientras subía la tasa informal. Desde septiembre cada botella se vende por debajo de lo que costó. El resto del catálogo se mantiene entre 14,9 % y 17,8 %.</p>
+
+  <figure class="tarjeta historia" id="historia" style="margin-left:0;margin-right:0">
+    <div class="historia-cabeza">
+      <figcaption><h3>Margen semanal sobre el ingreso</h3></figcaption>
+      <ul class="leyenda-linea"><li><i style="background:var(--senal)"></i>Aceite vegetal 1 L</li><li><i style="background:var(--tinta-2);opacity:.55"></i>Resto de productos</li></ul>
+    </div>
+    <svg viewBox="0 0 820 320" class="linea" role="img" aria-label="Margen semanal del aceite: 19,3 % la semana del 27 de abril, bajo cero desde la semana del 31 de agosto y −13,6 % la última semana. El resto de productos se mantiene entre 13,6 % y 19,7 %.">
+  <rect x="48" y="171.3" width="748" height="114.7" class="zona-perdida"/>
+  <g aria-hidden="true"><line x1="48" x2="796" y1="286.0" y2="286.0" class="grilla"/><text x="38" y="290.0" class="eje" text-anchor="end">-20 %</text><line x1="48" x2="796" y1="228.7" y2="228.7" class="grilla"/><text x="38" y="232.7" class="eje" text-anchor="end">-10 %</text><line x1="48" x2="796" y1="171.3" y2="171.3" class="cero"/><text x="38" y="175.3" class="eje" text-anchor="end">0 %</text><line x1="48" x2="796" y1="114.0" y2="114.0" class="grilla"/><text x="38" y="118.0" class="eje" text-anchor="end">10 %</text><line x1="48" x2="796" y1="56.7" y2="56.7" class="grilla"/><text x="38" y="60.7" class="eje" text-anchor="end">20 %</text><text x="76.8" y="310" class="eje">may</text><text x="191.8" y="310" class="eje">jun</text><text x="335.7" y="310" class="eje">jul</text><text x="450.8" y="310" class="eje">ago</text><text x="594.6" y="310" class="eje">sep</text><text x="709.7" y="310" class="eje">oct</text>
+  <text x="788" y="191.3" class="eje perdida" text-anchor="end">Bajo costo</text></g>
+  <path d="M48.0,66.0 L76.8,73.3 L105.5,79.5 L134.3,72.5 L163.1,83.4 L191.8,76.0 L220.6,72.6 L249.4,71.1 L278.2,92.5 L306.9,79.6 L335.7,84.6 L364.5,75.3 L393.2,76.7 L422.0,85.5 L450.8,65.8 L479.5,72.4 L508.3,72.3 L537.1,64.9 L565.8,58.3 L594.6,69.7 L623.4,76.1 L652.2,74.3 L680.9,75.5 L709.7,92.7 L738.5,84.8 L767.2,82.3 L796.0,93.2" class="l-resto" pathLength="1"/>
+  <path d="M48.0,60.5 L76.8,77.4 L105.5,80.5 L134.3,76.4 L163.1,61.8 L191.8,64.1 L220.6,75.3 L249.4,87.4 L278.2,100.3 L306.9,94.9 L335.7,103.3 L364.5,109.8 L393.2,145.8 L422.0,153.3 L450.8,149.3 L479.5,121.1 L508.3,124.7 L537.1,148.6 L565.8,180.9 L594.6,195.0 L623.4,202.0 L652.2,204.3 L680.9,198.5 L709.7,214.2 L738.5,224.3 L767.2,234.9 L796.0,249.2" class="l-aceite" pathLength="1"/>
+  <g class="notas" aria-hidden="true"><circle cx="48.0" cy="60.5" r="5" class="nota-punto"/><text x="48.0" y="44.5" text-anchor="start" class="nota-texto">19,3 %</text><circle cx="565.8" cy="180.9" r="5" class="nota-punto"/><text x="577.8" y="168.9" text-anchor="start" class="nota-texto">Cruza el 0 · 31 ago</text><circle cx="796.0" cy="249.2" r="5" class="nota-punto"/><text x="796.0" y="275.2" text-anchor="end" class="nota-texto">−13,6 %</text></g>
+  <g aria-hidden="true"><g class="punto" data-tip="Semana del 27 de abril: aceite 19,3 %, resto 18,4 %"><rect x="40.0" y="28" width="16" height="258" class="golpe"/><line x1="48.0" x2="48.0" y1="28" y2="286" class="guia"/><circle cx="48.0" cy="66.0" r="4" class="p-resto"/><circle cx="48.0" cy="60.5" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 4 de mayo: aceite 16,4 %, resto 17,1 %"><rect x="68.8" y="28" width="16" height="258" class="golpe"/><line x1="76.8" x2="76.8" y1="28" y2="286" class="guia"/><circle cx="76.8" cy="73.3" r="4" class="p-resto"/><circle cx="76.8" cy="77.4" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 11 de mayo: aceite 15,9 %, resto 16,0 %"><rect x="97.5" y="28" width="16" height="258" class="golpe"/><line x1="105.5" x2="105.5" y1="28" y2="286" class="guia"/><circle cx="105.5" cy="79.5" r="4" class="p-resto"/><circle cx="105.5" cy="80.5" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 18 de mayo: aceite 16,6 %, resto 17,2 %"><rect x="126.3" y="28" width="16" height="258" class="golpe"/><line x1="134.3" x2="134.3" y1="28" y2="286" class="guia"/><circle cx="134.3" cy="72.5" r="4" class="p-resto"/><circle cx="134.3" cy="76.4" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 25 de mayo: aceite 19,1 %, resto 15,3 %"><rect x="155.1" y="28" width="16" height="258" class="golpe"/><line x1="163.1" x2="163.1" y1="28" y2="286" class="guia"/><circle cx="163.1" cy="83.4" r="4" class="p-resto"/><circle cx="163.1" cy="61.8" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 1 de junio: aceite 18,7 %, resto 16,6 %"><rect x="183.8" y="28" width="16" height="258" class="golpe"/><line x1="191.8" x2="191.8" y1="28" y2="286" class="guia"/><circle cx="191.8" cy="76.0" r="4" class="p-resto"/><circle cx="191.8" cy="64.1" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 8 de junio: aceite 16,7 %, resto 17,2 %"><rect x="212.6" y="28" width="16" height="258" class="golpe"/><line x1="220.6" x2="220.6" y1="28" y2="286" class="guia"/><circle cx="220.6" cy="72.6" r="4" class="p-resto"/><circle cx="220.6" cy="75.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 15 de junio: aceite 14,6 %, resto 17,5 %"><rect x="241.4" y="28" width="16" height="258" class="golpe"/><line x1="249.4" x2="249.4" y1="28" y2="286" class="guia"/><circle cx="249.4" cy="71.1" r="4" class="p-resto"/><circle cx="249.4" cy="87.4" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 22 de junio: aceite 12,4 %, resto 13,8 %"><rect x="270.2" y="28" width="16" height="258" class="golpe"/><line x1="278.2" x2="278.2" y1="28" y2="286" class="guia"/><circle cx="278.2" cy="92.5" r="4" class="p-resto"/><circle cx="278.2" cy="100.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 29 de junio: aceite 13,3 %, resto 16,0 %"><rect x="298.9" y="28" width="16" height="258" class="golpe"/><line x1="306.9" x2="306.9" y1="28" y2="286" class="guia"/><circle cx="306.9" cy="79.6" r="4" class="p-resto"/><circle cx="306.9" cy="94.9" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 6 de julio: aceite 11,9 %, resto 15,1 %"><rect x="327.7" y="28" width="16" height="258" class="golpe"/><line x1="335.7" x2="335.7" y1="28" y2="286" class="guia"/><circle cx="335.7" cy="84.6" r="4" class="p-resto"/><circle cx="335.7" cy="103.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 13 de julio: aceite 10,7 %, resto 16,8 %"><rect x="356.5" y="28" width="16" height="258" class="golpe"/><line x1="364.5" x2="364.5" y1="28" y2="286" class="guia"/><circle cx="364.5" cy="75.3" r="4" class="p-resto"/><circle cx="364.5" cy="109.8" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 20 de julio: aceite 4,5 %, resto 16,5 %"><rect x="385.2" y="28" width="16" height="258" class="golpe"/><line x1="393.2" x2="393.2" y1="28" y2="286" class="guia"/><circle cx="393.2" cy="76.7" r="4" class="p-resto"/><circle cx="393.2" cy="145.8" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 27 de julio: aceite 3,2 %, resto 15,0 %"><rect x="414.0" y="28" width="16" height="258" class="golpe"/><line x1="422.0" x2="422.0" y1="28" y2="286" class="guia"/><circle cx="422.0" cy="85.5" r="4" class="p-resto"/><circle cx="422.0" cy="153.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 3 de agosto: aceite 3,8 %, resto 18,4 %"><rect x="442.8" y="28" width="16" height="258" class="golpe"/><line x1="450.8" x2="450.8" y1="28" y2="286" class="guia"/><circle cx="450.8" cy="65.8" r="4" class="p-resto"/><circle cx="450.8" cy="149.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 10 de agosto: aceite 8,8 %, resto 17,3 %"><rect x="471.5" y="28" width="16" height="258" class="golpe"/><line x1="479.5" x2="479.5" y1="28" y2="286" class="guia"/><circle cx="479.5" cy="72.4" r="4" class="p-resto"/><circle cx="479.5" cy="121.1" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 17 de agosto: aceite 8,1 %, resto 17,3 %"><rect x="500.3" y="28" width="16" height="258" class="golpe"/><line x1="508.3" x2="508.3" y1="28" y2="286" class="guia"/><circle cx="508.3" cy="72.3" r="4" class="p-resto"/><circle cx="508.3" cy="124.7" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 24 de agosto: aceite 4,0 %, resto 18,6 %"><rect x="529.1" y="28" width="16" height="258" class="golpe"/><line x1="537.1" x2="537.1" y1="28" y2="286" class="guia"/><circle cx="537.1" cy="64.9" r="4" class="p-resto"/><circle cx="537.1" cy="148.6" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 31 de agosto: aceite −1,7 %, resto 19,7 %"><rect x="557.8" y="28" width="16" height="258" class="golpe"/><line x1="565.8" x2="565.8" y1="28" y2="286" class="guia"/><circle cx="565.8" cy="58.3" r="4" class="p-resto"/><circle cx="565.8" cy="180.9" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 7 de septiembre: aceite −4,1 %, resto 17,7 %"><rect x="586.6" y="28" width="16" height="258" class="golpe"/><line x1="594.6" x2="594.6" y1="28" y2="286" class="guia"/><circle cx="594.6" cy="69.7" r="4" class="p-resto"/><circle cx="594.6" cy="195.0" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 14 de septiembre: aceite −5,4 %, resto 16,6 %"><rect x="615.4" y="28" width="16" height="258" class="golpe"/><line x1="623.4" x2="623.4" y1="28" y2="286" class="guia"/><circle cx="623.4" cy="76.1" r="4" class="p-resto"/><circle cx="623.4" cy="202.0" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 21 de septiembre: aceite −5,7 %, resto 16,9 %"><rect x="644.2" y="28" width="16" height="258" class="golpe"/><line x1="652.2" x2="652.2" y1="28" y2="286" class="guia"/><circle cx="652.2" cy="74.3" r="4" class="p-resto"/><circle cx="652.2" cy="204.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 28 de septiembre: aceite −4,7 %, resto 16,7 %"><rect x="672.9" y="28" width="16" height="258" class="golpe"/><line x1="680.9" x2="680.9" y1="28" y2="286" class="guia"/><circle cx="680.9" cy="75.5" r="4" class="p-resto"/><circle cx="680.9" cy="198.5" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 5 de octubre: aceite −7,5 %, resto 13,7 %"><rect x="701.7" y="28" width="16" height="258" class="golpe"/><line x1="709.7" x2="709.7" y1="28" y2="286" class="guia"/><circle cx="709.7" cy="92.7" r="4" class="p-resto"/><circle cx="709.7" cy="214.2" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 12 de octubre: aceite −9,2 %, resto 15,1 %"><rect x="730.5" y="28" width="16" height="258" class="golpe"/><line x1="738.5" x2="738.5" y1="28" y2="286" class="guia"/><circle cx="738.5" cy="84.8" r="4" class="p-resto"/><circle cx="738.5" cy="224.3" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 19 de octubre: aceite −11,1 %, resto 15,5 %"><rect x="759.2" y="28" width="16" height="258" class="golpe"/><line x1="767.2" x2="767.2" y1="28" y2="286" class="guia"/><circle cx="767.2" cy="82.3" r="4" class="p-resto"/><circle cx="767.2" cy="234.9" r="4" class="p-aceite"/></g><g class="punto" data-tip="Semana del 26 de octubre: aceite −13,6 %, resto 13,6 %"><rect x="788.0" y="28" width="16" height="258" class="golpe"/><line x1="796.0" x2="796.0" y1="28" y2="286" class="guia"/><circle cx="796.0" cy="93.2" r="4" class="p-resto"/><circle cx="796.0" cy="249.2" r="4" class="p-aceite"/></g></g>
+</svg>
+  </figure>
+
+  <dl class="tarjeta cifras">
+    <div><dt>Ingreso</dt><dd>152.905 USD</dd><small>a tasa informal del día</small></div>
+    <div><dt>Margen</dt><dd>24.146 USD</dd><small>ingreso menos último costo</small></div>
+    <div><dt>Margen sobre ingreso</dt><dd>15,8 %</dd><small>promedio del catálogo</small></div>
+    <div><dt>Ventas bajo costo</dt><dd class="critico">190</dd><small>todas de aceite</small></div>
+  </dl>
+</section>
+
+<section id="ingresos">
+  <h2>De dónde entra el dinero</h2>
+  <p class="intro">Todo convertido a USD con la tasa del día de cada venta.</p>
+  <div class="par">
+    <article class="tarjeta dona">
+  <h3>Por moneda de cobro</h3>
+  <p class="resumen">Más de la mitad entra en pesos: 66,8 % entre efectivo y transferencia.</p>
+  <div class="dona-cuerpo">
+    <svg viewBox="0 0 160 160" aria-hidden="true"><g transform="rotate(-90 80 80)"><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s1)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="179.76" data-circ="402.12" stroke-dashoffset="-0.00" style="transition-delay:0.08s" data-tip="CUP efectivo: 69.112 USD, 45,2 % del ingreso"/><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s2)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="84.93" data-circ="402.12" stroke-dashoffset="-181.76" style="transition-delay:0.16s" data-tip="Transferencia: 33.053 USD, 21,6 % del ingreso"/><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s3)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="120.32" data-circ="402.12" stroke-dashoffset="-268.68" style="transition-delay:0.24s" data-tip="USD: 46.512 USD, 30,4 % del ingreso"/><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s4)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="9.12" data-circ="402.12" stroke-dashoffset="-391.01" style="transition-delay:0.32s" data-tip="MLC: 4.228 USD, 2,8 % del ingreso"/></g></svg>
+    <table class="leyenda"><caption class="oculto">Por moneda de cobro</caption><tbody><tr tabindex="0" data-tip="CUP efectivo: 69.112 USD, 45,2 % del ingreso"><th scope="row"><i style="background:var(--s1)"></i>CUP efectivo</th><td>69.112 USD</td><td><b>45,2 %</b></td></tr><tr tabindex="0" data-tip="Transferencia: 33.053 USD, 21,6 % del ingreso"><th scope="row"><i style="background:var(--s2)"></i>Transferencia</th><td>33.053 USD</td><td><b>21,6 %</b></td></tr><tr tabindex="0" data-tip="USD: 46.512 USD, 30,4 % del ingreso"><th scope="row"><i style="background:var(--s3)"></i>USD</th><td>46.512 USD</td><td><b>30,4 %</b></td></tr><tr tabindex="0" data-tip="MLC: 4.228 USD, 2,8 % del ingreso"><th scope="row"><i style="background:var(--s4)"></i>MLC</th><td>4.228 USD</td><td><b>2,8 %</b></td></tr></tbody></table>
+  </div>
+</article>
+    <article class="tarjeta dona">
+  <h3>Por canal de venta</h3>
+  <p class="resumen">El almacén mueve 40,2 %; WhatsApp, 23,2 %.</p>
+  <div class="dona-cuerpo">
+    <svg viewBox="0 0 160 160" aria-hidden="true"><g transform="rotate(-90 80 80)"><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s1)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="159.85" data-circ="402.12" stroke-dashoffset="-0.00" style="transition-delay:0.08s" data-tip="Almacén: 61.541 USD, 40,2 % del ingreso"/><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s2)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="144.81" data-circ="402.12" stroke-dashoffset="-161.85" style="transition-delay:0.16s" data-tip="Tienda (POS): 55.822 USD, 36,5 % del ingreso"/><circle class="seg" r="64" cx="80" cy="80" stroke="var(--s3)" stroke-width="18" stroke-dasharray="0 402.12" data-largo="91.47" data-circ="402.12" stroke-dashoffset="-308.65" style="transition-delay:0.24s" data-tip="WhatsApp: 35.541 USD, 23,2 % del ingreso"/></g></svg>
+    <table class="leyenda"><caption class="oculto">Por canal de venta</caption><tbody><tr tabindex="0" data-tip="Almacén: 61.541 USD, 40,2 % del ingreso"><th scope="row"><i style="background:var(--s1)"></i>Almacén</th><td>61.541 USD</td><td><b>40,2 %</b></td></tr><tr tabindex="0" data-tip="Tienda (POS): 55.822 USD, 36,5 % del ingreso"><th scope="row"><i style="background:var(--s2)"></i>Tienda (POS)</th><td>55.822 USD</td><td><b>36,5 %</b></td></tr><tr tabindex="0" data-tip="WhatsApp: 35.541 USD, 23,2 % del ingreso"><th scope="row"><i style="background:var(--s3)"></i>WhatsApp</th><td>35.541 USD</td><td><b>23,2 %</b></td></tr></tbody></table>
+  </div>
+</article>
+  </div>
+</section>
+
+<section id="productos">
+  <h2>Margen por producto</h2>
+  <p class="intro">De peor a mejor margen sobre el ingreso de los seis meses.</p>
+  <ul class="tarjeta barras crece"><li tabindex="0" data-tip="Aceite vegetal 1 L: margen 6,0 % sobre 10.545 USD, 190 ventas bajo costo" class="alerta"><span class="nombre">Aceite vegetal 1 L</span><span class="pista"><span class="barra" style="--w:33.5%"></span></span><b>6,0 %</b><small>10.545 USD · <em>190 ventas bajo costo</em></small></li><li tabindex="0" data-tip="Café molido 250 g: margen 14,9 % sobre 11.169 USD" class=""><span class="nombre">Café molido 250 g</span><span class="pista"><span class="barra" style="--w:83.9%"></span></span><b>14,9 %</b><small>11.169 USD</small></li><li tabindex="0" data-tip="Espagueti 500 g: margen 15,5 % sobre 3.842 USD" class=""><span class="nombre">Espagueti 500 g</span><span class="pista"><span class="barra" style="--w:87.1%"></span></span><b>15,5 %</b><small>3.842 USD</small></li><li tabindex="0" data-tip="Salchichas paquete: margen 16,0 % sobre 9.127 USD" class=""><span class="nombre">Salchichas paquete</span><span class="pista"><span class="barra" style="--w:89.7%"></span></span><b>16,0 %</b><small>9.127 USD</small></li><li tabindex="0" data-tip="Azúcar 1 kg: margen 16,1 % sobre 5.132 USD" class=""><span class="nombre">Azúcar 1 kg</span><span class="pista"><span class="barra" style="--w:90.3%"></span></span><b>16,1 %</b><small>5.132 USD</small></li><li tabindex="0" data-tip="Pollo caja 10 lb: margen 16,5 % sobre 63.642 USD" class=""><span class="nombre">Pollo caja 10 lb</span><span class="pista"><span class="barra" style="--w:92.9%"></span></span><b>16,5 %</b><small>63.642 USD</small></li><li tabindex="0" data-tip="Frijol negro 1 kg: margen 16,6 % sobre 6.960 USD" class=""><span class="nombre">Frijol negro 1 kg</span><span class="pista"><span class="barra" style="--w:93.2%"></span></span><b>16,6 %</b><small>6.960 USD</small></li><li tabindex="0" data-tip="Leche en polvo 1 kg: margen 17,0 % sobre 32.517 USD" class=""><span class="nombre">Leche en polvo 1 kg</span><span class="pista"><span class="barra" style="--w:95.4%"></span></span><b>17,0 %</b><small>32.517 USD</small></li><li tabindex="0" data-tip="Puré de tomate 400 g: margen 17,4 % sobre 4.424 USD" class=""><span class="nombre">Puré de tomate 400 g</span><span class="pista"><span class="barra" style="--w:97.5%"></span></span><b>17,4 %</b><small>4.424 USD</small></li><li tabindex="0" data-tip="Arroz 1 kg: margen 17,8 % sobre 5.546 USD" class=""><span class="nombre">Arroz 1 kg</span><span class="pista"><span class="barra" style="--w:100.0%"></span></span><b>17,8 %</b><small>5.546 USD</small></li></ul>
+  <div class="tarjeta tabla">
+    <table class="datos"><caption class="oculto">Margen por producto y mes</caption>
+      <thead><tr><th scope="col">Margen por mes</th><th scope="col">may</th><th scope="col">jun</th><th scope="col">jul</th><th scope="col">ago</th><th scope="col">sep</th><th scope="col">oct</th></tr></thead><tbody><tr><th scope="row">Aceite vegetal 1 L</th><td class="">16,8 %</td><td class="">15,1 %</td><td class="bajo">6,9 %</td><td class="bajo">4,3 %</td><td class="neg"><span aria-hidden="true">▼ </span>−5,1 %</td><td class="neg"><span aria-hidden="true">▼ </span>−9,9 %</td></tr><tr><th scope="row">Café molido 250 g</th><td class="">16,7 %</td><td class="">14,7 %</td><td class="">14,4 %</td><td class="">14,7 %</td><td class="">14,5 %</td><td class="">14,3 %</td></tr><tr><th scope="row">Espagueti 500 g</th><td class="">16,0 %</td><td class="">16,1 %</td><td class="">17,2 %</td><td class="">13,4 %</td><td class="">16,5 %</td><td class="">14,3 %</td></tr><tr><th scope="row">Salchichas paquete</th><td class="">17,1 %</td><td class="">16,5 %</td><td class="">15,4 %</td><td class="">16,8 %</td><td class="">16,1 %</td><td class="">14,0 %</td></tr><tr><th scope="row">Azúcar 1 kg</th><td class="">15,9 %</td><td class="">15,6 %</td><td class="">19,4 %</td><td class="">16,8 %</td><td class="">14,8 %</td><td class="">12,6 %</td></tr><tr><th scope="row">Pollo caja 10 lb</th><td class="">16,4 %</td><td class="">16,6 %</td><td class="">14,7 %</td><td class="">18,3 %</td><td class="">18,2 %</td><td class="">12,8 %</td></tr><tr><th scope="row">Frijol negro 1 kg</th><td class="">16,6 %</td><td class="">16,0 %</td><td class="">17,1 %</td><td class="">17,9 %</td><td class="">17,0 %</td><td class="">15,2 %</td></tr><tr><th scope="row">Leche en polvo 1 kg</th><td class="">15,9 %</td><td class="">15,4 %</td><td class="">15,9 %</td><td class="">20,2 %</td><td class="">16,6 %</td><td class="">17,5 %</td></tr><tr><th scope="row">Puré de tomate 400 g</th><td class="">18,8 %</td><td class="">16,3 %</td><td class="">18,1 %</td><td class="">16,3 %</td><td class="">17,6 %</td><td class="">17,7 %</td></tr><tr><th scope="row">Arroz 1 kg</th><td class="">16,7 %</td><td class="">18,2 %</td><td class="">18,7 %</td><td class="">19,1 %</td><td class="">17,1 %</td><td class="">17,1 %</td></tr></tbody></table>
+  </div>
+</section>
+
+<section id="calidad">
+  <h2>Calidad del dato</h2>
+  <p class="intro">Cada fila recibida en los archivos termina en exactamente un destino.</p>
+  <div class="tarjeta estado">
+    <span class="estado-icono" aria-hidden="true">✓</span>
+    <div><h3>Todo cuadra</h3>
+    <p>5.305 filas recibidas de tres fuentes, cada una clasificada como venta, descartada, cuarentena o duplicado.</p></div>
+  </div>
+  <div class="tarjeta tabla">
+    <table class="datos"><caption class="oculto">Conciliación por fuente</caption>
+      <thead><tr><th scope="col">Fuente</th><th scope="col">Filas recibidas</th><th scope="col">Ventas</th><th scope="col">Descartadas</th><th scope="col">Cuarentena</th><th scope="col">Duplicado exacto</th><th scope="col">Duplicado cruzado</th><th scope="col">Cuadra</th></tr></thead><tbody><tr><th scope="row">Almacén</th><td>680</td><td>679</td><td>0</td><td>1</td><td>0</td><td>0</td><td>Sí</td></tr><tr><th scope="row">Tienda (POS)</th><td>3.775</td><td>3.748</td><td>0</td><td>27</td><td>0</td><td>0</td><td>Sí</td></tr><tr><th scope="row">WhatsApp</th><td>850</td><td>544</td><td>23</td><td>1</td><td>34</td><td>248</td><td>Sí</td></tr></tbody></table>
+  </div>
+</section>
+
+<footer>La Ceiba es una empresa ficticia y los datos son sintéticos. Generado desde las tablas gold del pipeline.</footer>
+</main>
+<div id="tip" role="tooltip"></div>
+<script>
+// Un único momento orquestado: la línea del aceite se dibuja y aparecen sus tres anotaciones.
+requestAnimationFrame(() => document.getElementById("historia").classList.add("listo"));
+
+const alVer = (sel, fn) => {
+  const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { fn(e.target); obs.unobserve(e.target); } }), { threshold: .25 });
+  document.querySelectorAll(sel).forEach(el => obs.observe(el));
+};
+alVer(".dona", el => el.querySelectorAll(".seg").forEach(s => s.setAttribute("stroke-dasharray", `${s.dataset.largo} ${s.dataset.circ}`)));
+alVer(".crece", el => el.classList.add("visible"));
+
+// Segmento activo según la sección visible.
+const enlaces = [...document.querySelectorAll(".segmentos a")];
+const secciones = enlaces.map(a => document.querySelector(a.getAttribute("href")));
+const marcar = () => {
+  let actual = 0;
+  secciones.forEach((s, i) => { if (s.getBoundingClientRect().top < innerHeight * .4) actual = i; });
+  if (innerHeight + scrollY >= document.body.scrollHeight - 4) actual = secciones.length - 1;
+  enlaces.forEach((a, i) => a.setAttribute("aria-current", i === actual));
+};
+addEventListener("scroll", marcar, { passive: true }); marcar();
+
+const tip = document.getElementById("tip");
+const mostrar = (el, x, y) => {
+  tip.textContent = el.dataset.tip; tip.style.opacity = 1;
+  tip.style.left = Math.min(x + 14, innerWidth - tip.offsetWidth - 8) + "px"; tip.style.top = (y + 16) + "px";
+};
+const ocultar = () => tip.style.opacity = 0;
+addEventListener("scroll", ocultar, { passive: true });
+document.querySelectorAll("[data-tip]").forEach(el => {
+  el.addEventListener("mousemove", ev => mostrar(el, ev.clientX, ev.clientY));
+  el.addEventListener("mouseleave", ocultar);
+  el.addEventListener("focus", () => { const r = el.getBoundingClientRect(); mostrar(el, r.left, r.bottom - 8); });
+  el.addEventListener("blur", ocultar);
+});
+</script>
+</body></html>
