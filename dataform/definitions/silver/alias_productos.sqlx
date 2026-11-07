@@ -1,0 +1,3 @@
+config { type: "table", schema: "silver", description: "Todas las formas en que la gente escribe un producto, apuntando a su SKU." }
+
+SELECT alias, sku FROM ${ref("bronze", "maestro_alias")}

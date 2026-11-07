@@ -1,0 +1,20 @@
+config { type: "table", schema: "gold", description: "Por fuente: filas en bronze = ventas + descartados + cuarentena + duplicados. Si no cuadra, algo se perdió." }
+
+WITH en_bronze AS (
+    SELECT 'pos' AS fuente, COUNT(*) AS filas_bronze FROM ${ref("bronze", "ventas_pos")}
+    UNION ALL SELECT 'whatsapp', COUNT(*) FROM ${ref("bronze", "pedidos_whatsapp")}
+    UNION ALL SELECT 'almacen', COUNT(*) FROM ${ref("bronze", "salidas_almacen")}
+),
+en_silver AS (
+    SELECT fuente,
+           COUNTIF(destino = 'venta') AS ventas,
+           COUNTIF(destino = 'descartado') AS descartado,
+           COUNTIF(destino = 'cuarentena') AS cuarentena,
+           COUNTIF(destino = 'duplicado_exacto') AS duplicado_exacto,
+           COUNTIF(destino = 'duplicado_cruzado') AS duplicado_cruzado
+    FROM ${ref("silver", "lineas_clasificadas")}
+    GROUP BY fuente
+)
+SELECT b.fuente, b.filas_bronze, s.ventas, s.descartado, s.cuarentena, s.duplicado_exacto, s.duplicado_cruzado,
+       b.filas_bronze = COALESCE(s.ventas + s.descartado + s.cuarentena + s.duplicado_exacto + s.duplicado_cruzado, 0) AS cuadra
+FROM en_bronze b LEFT JOIN en_silver s USING (fuente)

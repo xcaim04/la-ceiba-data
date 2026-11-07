@@ -1,0 +1,11 @@
+config { type: "table", schema: "gold", description: "Grano: producto y semana (lunes). Responde: ¿qué productos me dejan plata de verdad?" }
+
+SELECT DATE_TRUNC(v.fecha, WEEK(MONDAY)) AS semana, v.sku, p.nombre,
+       SUM(v.cantidad) AS unidades,
+       SUM(v.ingreso_usd) AS ingreso_usd,
+       SUM(v.costo_usd) AS costo_usd,
+       SUM(v.ingreso_usd) - SUM(v.costo_usd) AS margen_usd,
+       SUM(CASE WHEN v.ingreso_usd < v.costo_usd THEN 1 ELSE 0 END) AS lineas_bajo_costo
+FROM ${ref("silver", "ventas")} v
+JOIN ${ref("silver", "catalogo_productos")} p USING (sku)
+GROUP BY 1, 2, 3

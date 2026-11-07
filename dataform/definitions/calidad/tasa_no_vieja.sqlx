@@ -1,0 +1,3 @@
+config { type: "assertion", description: "La tasa usada no puede tener más de 5 días: si pasa, falta cargar tasas." }
+
+SELECT id_venta, fecha, fecha_tasa FROM ${ref("silver", "ventas")} WHERE DATE_DIFF(fecha, fecha_tasa, DAY) > 5

@@ -1,0 +1,8 @@
+config { type: "table", schema: "gold", description: "Grano: mes, fuente y moneda. Responde: ¿por dónde entra la plata y en qué moneda?" }
+
+SELECT DATE_TRUNC(fecha, MONTH) AS mes, fuente, moneda,
+       COUNT(*) AS lineas,
+       SUM(ingreso_usd) AS ingreso_usd,
+       SUM(ingreso_usd) - SUM(costo_usd) AS margen_usd
+FROM ${ref("silver", "ventas")}
+GROUP BY 1, 2, 3

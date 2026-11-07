@@ -1,0 +1,3 @@
+config { type: "assertion", description: "Ingresos y costos siempre mayores que cero." }
+
+SELECT id_venta, ingreso_usd, costo_usd FROM ${ref("silver", "ventas")} WHERE ingreso_usd <= 0 OR costo_usd <= 0
