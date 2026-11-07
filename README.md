@@ -8,27 +8,30 @@ Pipeline de datos de punta a punta para una mipyme mayorista cubana que cobra en
 
 Todos los datos son **sintéticos**: los genera [`generar/generar_datos.py`](generar/generar_datos.py), con errores puestos a propósito para que el pipeline tenga algo real que resolver.
 
+![Panel privado de La Ceiba: el titular del aceite y la línea de margen semanal frente al resto de productos](docs/capturas/panel-claro.png)
+
 ---
 
 ## Contenido
 
 1. [El problema](#el-problema)
 2. [Qué resuelve](#qué-resuelve)
-3. [Arquitectura](#arquitectura)
-4. [Capas y grano](#capas-y-grano)
-5. [Reglas de negocio, una frase cada una](#reglas-de-negocio-una-frase-cada-una)
-6. [Calidad del dato y conciliación](#calidad-del-dato-y-conciliación)
-7. [BI: la página del panel](#bi-la-página-del-panel)
-8. [BigQuery y Dataform](#bigquery-y-dataform)
-9. [Sitio privado y administración](#sitio-privado-y-administración)
-10. [Tecnologías y por qué](#tecnologías-y-por-qué)
-11. [Decisiones y alternativas descartadas](#decisiones-y-alternativas-descartadas)
-12. [Cómo correrlo](#cómo-correrlo)
-13. [Pruebas](#pruebas)
-14. [Estructura del repositorio](#estructura-del-repositorio)
-15. [Flujo de trabajo con git](#flujo-de-trabajo-con-git)
-16. [Cómo usé Claude Code](#cómo-usé-claude-code)
-17. [Límites conocidos](#límites-conocidos)
+3. [Capturas](#capturas)
+4. [Arquitectura](#arquitectura)
+5. [Capas y grano](#capas-y-grano)
+6. [Reglas de negocio, una frase cada una](#reglas-de-negocio-una-frase-cada-una)
+7. [Calidad del dato y conciliación](#calidad-del-dato-y-conciliación)
+8. [BI: la página del panel](#bi-la-página-del-panel)
+9. [BigQuery y Dataform](#bigquery-y-dataform)
+10. [Sitio privado y administración](#sitio-privado-y-administración)
+11. [Tecnologías y por qué](#tecnologías-y-por-qué)
+12. [Decisiones y alternativas descartadas](#decisiones-y-alternativas-descartadas)
+13. [Cómo correrlo](#cómo-correrlo)
+14. [Pruebas](#pruebas)
+15. [Estructura del repositorio](#estructura-del-repositorio)
+16. [Flujo de trabajo con git](#flujo-de-trabajo-con-git)
+17. [Cómo usé Claude Code](#cómo-usé-claude-code)
+18. [Límites conocidos](#límites-conocidos)
 
 ---
 
@@ -55,6 +58,19 @@ El dueño hace una pregunta sencilla que hoy nadie puede responder con confianza
 | «Creo que el aceite va bien». | El margen real por producto y semana, y cuántas ventas fueron por debajo del costo. |
 | Nadie sabe si se perdieron filas por el camino. | Una conciliación por fuente que prueba que cada fila del archivo terminó en un solo destino. |
 | Un archivo roto contamina el informe. | Si una carga rompe una prueba de calidad, se deshace sola y el panel no cambia. |
+
+
+---
+
+## Capturas
+
+| Portada pública | Panel en modo oscuro |
+|---|---|
+| ![Portada pública con el lema y un gráfico de ejemplo sin datos de la empresa](docs/capturas/portada.png) | ![Panel privado en modo oscuro](docs/capturas/panel-oscuro.png) |
+| **Administración de datos** | **Página de BI en Evidence** |
+| ![Administración: conciliación por fuente, carga de archivos y catálogo maestro](docs/capturas/administracion.png) | ![Página de Evidence con cifras clave, margen mensual e ingreso por moneda](docs/capturas/bi-evidence.png) |
+
+Todas las capturas usan los datos sintéticos de la semilla 42.
 
 ---
 
@@ -341,6 +357,7 @@ cd dataform && npm install
 ├── app/                       sitio FastAPI: presentación, panel y administración
 ├── bi/                        página de BI en Evidence
 ├── dataform/                  versión BigQuery del pipeline
+├── docs/capturas/             imágenes de este README
 ├── cargar_bigquery.py         carga de archivos a bronze en BigQuery
 └── tests/                     pytest
 ```

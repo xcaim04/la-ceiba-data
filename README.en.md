@@ -8,6 +8,8 @@ An end-to-end data pipeline for a Cuban wholesale small business that gets paid 
 
 All data is **synthetic**: it is produced by [`generar/generar_datos.py`](generar/generar_datos.py), with errors planted on purpose so the pipeline has something real to solve.
 
+![La Ceiba private dashboard: the cooking-oil headline and the weekly margin line against all other products](docs/capturas/panel-claro.png)
+
 Code, tables and columns are named in Spanish, the language of the business. This README explains each name the first time it appears.
 
 ---
@@ -16,21 +18,22 @@ Code, tables and columns are named in Spanish, the language of the business. Thi
 
 1. [The problem](#the-problem)
 2. [What it solves](#what-it-solves)
-3. [Architecture](#architecture)
-4. [Layers and grain](#layers-and-grain)
-5. [Business rules, one sentence each](#business-rules-one-sentence-each)
-6. [Data quality and reconciliation](#data-quality-and-reconciliation)
-7. [BI: the dashboard page](#bi-the-dashboard-page)
-8. [BigQuery and Dataform](#bigquery-and-dataform)
-9. [Private site and administration](#private-site-and-administration)
-10. [Technologies and why](#technologies-and-why)
-11. [Decisions and rejected alternatives](#decisions-and-rejected-alternatives)
-12. [How to run it](#how-to-run-it)
-13. [Tests](#tests)
-14. [Repository layout](#repository-layout)
-15. [Git workflow](#git-workflow)
-16. [How I used Claude Code](#how-i-used-claude-code)
-17. [Known limits](#known-limits)
+3. [Screenshots](#screenshots)
+4. [Architecture](#architecture)
+5. [Layers and grain](#layers-and-grain)
+6. [Business rules, one sentence each](#business-rules-one-sentence-each)
+7. [Data quality and reconciliation](#data-quality-and-reconciliation)
+8. [BI: the dashboard page](#bi-the-dashboard-page)
+9. [BigQuery and Dataform](#bigquery-and-dataform)
+10. [Private site and administration](#private-site-and-administration)
+11. [Technologies and why](#technologies-and-why)
+12. [Decisions and rejected alternatives](#decisions-and-rejected-alternatives)
+13. [How to run it](#how-to-run-it)
+14. [Tests](#tests)
+15. [Repository layout](#repository-layout)
+16. [Git workflow](#git-workflow)
+17. [How I used Claude Code](#how-i-used-claude-code)
+18. [Known limits](#known-limits)
 
 ---
 
@@ -57,6 +60,21 @@ The owner asks a simple question nobody can answer with confidence today: **whic
 | "I think the oil is doing fine." | Real margin per product and week, and how many sales were below cost. |
 | Nobody knows whether rows got lost along the way. | A per-source reconciliation that proves every row in the file ended in exactly one destination. |
 | A broken file pollutes the report. | If a load breaks a quality test, it rolls itself back and the dashboard does not change. |
+
+
+---
+
+## Screenshots
+
+The interface is in Spanish, the language of the business.
+
+| Public landing page | Dashboard in dark mode |
+|---|---|
+| ![Public landing page with the tagline and a sample chart without company data](docs/capturas/portada.png) | ![Private dashboard in dark mode](docs/capturas/panel-oscuro.png) |
+| **Data administration** | **BI page in Evidence** |
+| ![Administration: per-source reconciliation, file upload and master catalog](docs/capturas/administracion.png) | ![Evidence page with key figures, monthly margin and revenue by currency](docs/capturas/bi-evidence.png) |
+
+All screenshots use the synthetic data from seed 42.
 
 ---
 
@@ -343,6 +361,7 @@ cd dataform && npm install
 ├── app/                       FastAPI site: presentation, dashboard and admin
 ├── bi/                        BI page in Evidence
 ├── dataform/                  BigQuery version of the pipeline
+├── docs/capturas/             images used in this README
 ├── cargar_bigquery.py         loads files into bronze on BigQuery
 └── tests/                     pytest
 ```
