@@ -59,6 +59,16 @@ def test_mensaje_reenviado_es_duplicado_exacto(tmp_path):
     assert destinos(con) == {"venta": 1, "duplicado_exacto": 1}
 
 
+def test_pedidos_sin_telefono_cuentan_cada_uno(tmp_path):
+    con = correr(
+        tmp_path,
+        whatsapp=WHATSAPP + "2026-05-01 10:00:00,,Paladar A,2 x pollo 10lb @ 7000 CUP\n"
+                            "2026-05-01 11:00:00,,Cafeteria B,3 x pollo 10lb @ 7000 CUP\n",
+    )
+    assert destinos(con) == {"venta": 2}
+    assert all(filas == 0 for filas in pruebas_calidad(con).values())
+
+
 def test_charla_se_descarta_y_producto_desconocido_va_a_cuarentena(tmp_path):
     con = correr(
         tmp_path,
