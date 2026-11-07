@@ -20,6 +20,36 @@ uv run pytest
 
 `pipeline.py` termina con código 1 si alguna prueba de calidad falla, así que en CI corta el despliegue.
 
+## Sitio privado
+
+Los datos son de la empresa, así que el panel no se publica: lo sirve una app pequeña (FastAPI) con tres partes.
+
+| Ruta | Quién | Qué hay |
+|---|---|---|
+| `/` | cualquiera | Presentación del producto, con un gráfico de ejemplo y sin datos de la empresa. |
+| `/panel` | administrador | El mismo panel de `dashboard.py`, generado al momento desde gold. |
+| `/admin` | administrador | Cargar archivos, editar el catálogo de productos y asignar las formas que dejaron ventas en cuarentena. |
+
+```bash
+uv run python -m app.crear_admin <usuario>      # pide la contraseña y guarda solo su hash
+uv run uvicorn app.main:app --port 8000
+```
+
+- **Datos fuera del repositorio:** viven en `LA_CEIBA_DATOS` (por defecto `data/`): `raw/`, `maestros/`, `historial/`, la base DuckDB y el usuario.
+- **Cada cambio pasa por las pruebas de calidad.** Se guarda una copia del archivo anterior, se recalcula en una base aparte y, si falla alguna prueba, se deshace. El panel nunca ve una base a medio calcular.
+- **Seguridad:**
+  - Contraseña con scrypt.
+  - Cookie de sesión firmada, `HttpOnly`, `SameSite=Strict` y `Secure`. Para probar sin HTTPS en local: `LA_CEIBA_HTTPS=0`.
+  - Token CSRF en cada formulario.
+  - Bloqueo de 5 minutos tras 5 intentos fallidos.
+  - `no-store` en las páginas privadas.
+  - El nombre de cada archivo lo decide el servidor, no el archivo subido.
+  - Archivos de hasta 5 MB, con las columnas exactas.
+- **Límites conocidos:**
+  - Hay un solo administrador.
+  - El bloqueo de intentos vive en memoria y se reinicia con el servidor.
+  - En producción hace falta HTTPS delante (Caddy o nginx).
+
 ## Capas
 
 | Capa | Tabla | Grano | Qué hace |
