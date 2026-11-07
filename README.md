@@ -70,10 +70,10 @@ uv run uvicorn app.main:app --port 8000
 4. **WhatsApp y almacén:** un pedido de WhatsApp y una salida de almacén con el mismo cliente, día, producto y cantidad son la misma venta, y se queda el registro del almacén porque confirma la entrega.
 5. **Emparejamiento uno a uno:** si hay dos pedidos iguales en WhatsApp y una sola salida en almacén, solo uno se toma como duplicado.
 6. **Cantidad y precio:** una cantidad o un precio en cero, negativo o ilegible manda la línea a cuarentena.
-7. **Tasa:** se usa la tasa informal del día de la venta y, si ese día no se publicó, la última anterior.
+7. **Tasa:** se usa la tasa informal del día de la venta y, si ese día no se publicó, la última anterior; un archivo con dos tasas el mismo día se rechaza.
 8. **Transferencia:** el CUP por transferencia vale lo mismo que el CUP en efectivo.
 9. **MLC:** se pasa a CUP con su tasa y luego a USD con la tasa del dólar.
-10. **Costo:** el costo de una venta es el de la última compra de ese producto hecha ese día o antes.
+10. **Costo:** el costo de una venta es el de la última compra de ese producto hecha ese día o antes y, si ese día hubo varias, su costo medio ponderado por cantidad.
 
 ## Pruebas de calidad
 
@@ -84,6 +84,7 @@ Cada archivo de [`sql/calidad/`](sql/calidad) devuelve las filas que rompen una 
 | `ventas_llave_unica` | Que ninguna venta aparezca dos veces en silver. |
 | `ventas_con_tasa_y_costo` | Que ninguna venta se quede sin convertir a USD. |
 | `tasa_no_vieja` | Que no se use una tasa de hace más de 5 días; si pasa, falta cargar tasas. |
+| `tasa_unica_por_dia` | Que no haya dos tasas el mismo día para la misma moneda: no se sabría cuál usar. |
 | `montos_positivos` | Que no haya ingresos ni costos en cero o negativos. |
 | `conciliacion_cuadra` | Que ninguna fila de bronze se pierda entre capas. |
 | `gold_cuadra_con_silver` | Que el total de gold sea exactamente el de silver. |
