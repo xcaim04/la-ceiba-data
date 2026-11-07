@@ -19,10 +19,10 @@ WHATSAPP = "fecha_hora,telefono,cliente,mensaje\n"
 ALMACEN = "vale,fecha,cliente,producto,cantidad,precio,moneda\n"
 
 
-def correr(tmp_path, pos=POS, whatsapp=WHATSAPP, almacen=ALMACEN, tasas=TASAS):
+def correr(tmp_path, pos=POS, whatsapp=WHATSAPP, almacen=ALMACEN, tasas=TASAS, compras=COMPRAS):
     archivos = {
         "ventas_pos_2026-05.csv": pos, "pedidos_whatsapp.csv": whatsapp, "salidas_almacen.csv": almacen,
-        "tasa_informal_diaria.csv": tasas, "compras_proveedor.csv": COMPRAS,
+        "tasa_informal_diaria.csv": tasas, "compras_proveedor.csv": compras,
     }
     for nombre, contenido in archivos.items():
         (tmp_path / nombre).write_text(contenido, encoding="utf-8")
@@ -59,6 +59,16 @@ def test_mensaje_reenviado_es_duplicado_exacto(tmp_path):
     assert destinos(con) == {"venta": 1, "duplicado_exacto": 1}
 
 
+def test_pedidos_sin_telefono_cuentan_cada_uno(tmp_path):
+    con = correr(
+        tmp_path,
+        whatsapp=WHATSAPP + "2026-05-01 10:00:00,,Paladar A,2 x pollo 10lb @ 7000 CUP\n"
+                            "2026-05-01 11:00:00,,Cafeteria B,3 x pollo 10lb @ 7000 CUP\n",
+    )
+    assert destinos(con) == {"venta": 2}
+    assert all(filas == 0 for filas in pruebas_calidad(con).values())
+
+
 def test_charla_se_descarta_y_producto_desconocido_va_a_cuarentena(tmp_path):
     con = correr(
         tmp_path,
@@ -86,6 +96,30 @@ def test_mlc_se_convierte_con_su_tasa_y_la_del_usd(tmp_path):
 def test_sin_tasa_anterior_falla_la_prueba_de_calidad(tmp_path):
     con = correr(tmp_path, pos=POS + "1,1,2026-04-30 10:00:00,pollo 10lb,1,7000,CUP\n")
     assert pruebas_calidad(con)["ventas_con_tasa_y_costo"] == 1
+
+
+def test_transferencia_vale_lo_mismo_que_el_cup(tmp_path):
+    con = correr(tmp_path, pos=POS + "1,1,2026-05-01 10:00:00,pollo 10lb,1,8000,transf\n")
+    assert con.execute("SELECT moneda, ingreso_usd FROM silver.ventas").fetchone() == ("TRANSFERENCIA", 20)
+
+
+def test_precio_en_cero_o_ilegible_va_a_cuarentena(tmp_path):
+    con = correr(tmp_path, pos=POS + "1,1,2026-05-01 10:00:00,pollo 10lb,1,0,CUP\n"
+                                     "1,2,2026-05-01 10:00:00,pollo 10lb,1,siete mil,CUP\n")
+    motivos = con.execute("SELECT motivo_cuarentena FROM silver.lineas_clasificadas").fetchall()
+    assert motivos == [("precio_invalido",), ("precio_invalido",)]
+
+
+def test_dos_compras_el_mismo_dia_dan_el_costo_medio(tmp_path):
+    # 100 cajas a 10 USD y 300 a 16 USD: (1000 + 4800) / 400 = 14,50 USD por caja.
+    compras = "fecha,sku,costo_unitario_usd,cantidad\n2026-05-01,POLLO-10LB,10,100\n2026-05-01,POLLO-10LB,16,300\n"
+    con = correr(tmp_path, pos=POS + "1,1,2026-05-01 10:00:00,pollo 10lb,2,8000,CUP\n", compras=compras)
+    assert con.execute("SELECT costo_unitario_usd, costo_usd FROM silver.ventas").fetchone() == (14.5, 29)
+
+
+def test_dos_tasas_el_mismo_dia_paran_la_carga(tmp_path):
+    con = correr(tmp_path, tasas=TASAS + "2026-05-01,USD,410\n", pos=POS + "1,1,2026-05-01 10:00:00,pollo 10lb,1,8000,CUP\n")
+    assert pruebas_calidad(con)["tasa_unica_por_dia"] == 1
 
 
 @pytest.mark.parametrize("semilla", [1, 42])

@@ -1,0 +1,7 @@
+config { type: "table", schema: "silver", description: "Una fila por fecha y SKU; si ese día hubo varias compras, vale el costo medio ponderado por cantidad." }
+
+SELECT CAST(fecha AS DATE) AS fecha, sku,
+       CAST(SUM(CAST(costo_unitario_usd AS NUMERIC(12, 2)) * CAST(cantidad AS INT64))
+            / SUM(CAST(cantidad AS INT64)) AS NUMERIC(12, 2)) AS costo_unitario_usd
+FROM ${ref("bronze", "compras")}
+GROUP BY 1, 2

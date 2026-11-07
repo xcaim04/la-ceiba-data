@@ -127,6 +127,21 @@ def test_carga_valida_reemplaza_y_guarda_el_anterior(cliente, entorno):
     assert "Archivo cargado" in pagina, re.search(r"aviso [^>]*>(.{0,400})", pagina, re.S).group(1)
     assert ruta.read_bytes() == nuevo.replace(b"\r\n", b"\n")
     assert any(carpeta.glob("historial/*_tasa_informal_diaria.csv"))
+    assert {p.stem for p in carpeta.glob("gold/*.parquet")} == {"margen_producto_semana", "conciliacion", "ingreso_por_canal"}
+
+
+def test_usuario_y_csrf_con_tildes_no_rompen_la_entrada(cliente, entorno):
+    seguridad, carpeta = entorno[2], entorno[3]
+    admin = carpeta / "admin_jose.json"
+    seguridad.guardar_admin(admin, "José Peña", CLAVE)
+    assert seguridad.verificar(admin, "José Peña", CLAVE)
+    assert not seguridad.verificar(admin, "Jose Pena", CLAVE)
+    r = cliente.post("/entrar", data={"usuario": "ñandú", "clave": "x", "csrf": "ñ"})
+    assert r.status_code == 200 and "caducó" in r.text
+    token = csrf(cliente.get("/entrar"))
+    r = cliente.post("/entrar", data={"usuario": "ñandú", "clave": "mala", "csrf": token})
+    assert r.status_code == 200 and "incorrectos" in r.text
+    seguridad.limpiar_fallos("testclient")
 
 
 def test_demasiados_intentos_bloquean_el_acceso(cliente, entorno):

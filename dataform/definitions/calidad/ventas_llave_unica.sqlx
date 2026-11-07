@@ -1,0 +1,3 @@
+config { type: "assertion", description: "Cada línea de venta aparece una sola vez en silver." }
+
+SELECT id_venta, COUNT(*) AS veces FROM ${ref("silver", "ventas")} GROUP BY id_venta HAVING COUNT(*) > 1

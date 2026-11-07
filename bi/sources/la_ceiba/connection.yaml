@@ -1,0 +1,5 @@
+# Lee las tablas gold que exporta en Parquet cada recálculo (app/datos.py), en data/gold/.
+name: la_ceiba
+type: duckdb
+options:
+  filename: ":memory:"

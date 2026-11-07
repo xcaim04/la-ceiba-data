@@ -44,12 +44,13 @@ class ErrorDatos(ValueError):
 
 def rutas(carpeta: Path = None) -> dict[str, Path]:
     c = carpeta or CARPETA
-    return {"raw": c / "raw", "maestros": c / "maestros", "historial": c / "historial", "base": c / "la_ceiba.duckdb"}
+    return {"raw": c / "raw", "maestros": c / "maestros", "historial": c / "historial", "gold": c / "gold",
+            "base": c / "la_ceiba.duckdb"}
 
 
 def preparar(carpeta: Path = None) -> None:
     r = rutas(carpeta)
-    for clave in ("raw", "maestros", "historial"):
+    for clave in ("raw", "maestros", "historial", "gold"):
         r[clave].mkdir(parents=True, exist_ok=True)
     for semilla in ("catalogo_productos.csv", "alias_productos.csv"):
         if not (r["maestros"] / semilla).exists():
@@ -71,6 +72,10 @@ def recalcular(carpeta: Path = None) -> dict[str, int]:
     try:
         con = ejecutar(r["raw"], nueva, r["maestros"])
         fallos = {k: v for k, v in pruebas_calidad(con).items() if v}
+        if not fallos:
+            # Gold también en Parquet, para la página de BI (bi/): lo lee cualquier versión de DuckDB.
+            for (tabla,) in con.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'gold'").fetchall():
+                con.execute(f"COPY gold.{tabla} TO '{r['gold'] / tabla}.parquet' (FORMAT parquet)")
         con.close()
     except duckdb.Error as e:
         nueva.unlink(missing_ok=True)

@@ -1,0 +1,3 @@
+config { type: "table", schema: "silver", description: "Catálogo maestro: un SKU por producto." }
+
+SELECT sku, nombre, unidad FROM ${ref("bronze", "maestro_productos")}
