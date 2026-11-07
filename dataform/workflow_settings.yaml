@@ -1,0 +1,5 @@
+# Proyecto de Google Cloud: cámbialo por el tuyo (o pásalo con --default-database al compilar).
+defaultProject: la-ceiba-datos
+defaultLocation: US
+defaultDataset: la_ceiba
+defaultAssertionDataset: calidad

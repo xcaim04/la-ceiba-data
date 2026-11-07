@@ -1,0 +1,3 @@
+config { type: "assertion", description: "Una sola tasa por día y moneda: si el archivo trae dos, no se sabe cuál usar." }
+
+SELECT fecha, moneda, COUNT(*) AS veces FROM ${ref("silver", "tasas")} GROUP BY fecha, moneda HAVING COUNT(*) > 1

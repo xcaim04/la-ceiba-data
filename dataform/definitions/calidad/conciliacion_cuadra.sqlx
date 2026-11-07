@@ -1,0 +1,3 @@
+config { type: "assertion", description: "Ninguna fila de bronze se pierde entre capas." }
+
+SELECT * FROM ${ref("gold", "conciliacion")} WHERE NOT cuadra

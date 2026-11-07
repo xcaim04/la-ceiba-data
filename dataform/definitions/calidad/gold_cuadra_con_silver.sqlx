@@ -1,0 +1,6 @@
+config { type: "assertion", description: "El total de gold es exactamente el de silver." }
+
+SELECT g.total AS gold, s.total AS silver
+FROM (SELECT SUM(ingreso_usd) AS total FROM ${ref("gold", "margen_producto_semana")}) g,
+     (SELECT SUM(ingreso_usd) AS total FROM ${ref("silver", "ventas")}) s
+WHERE g.total IS DISTINCT FROM s.total

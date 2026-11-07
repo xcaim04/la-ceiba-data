@@ -1,0 +1,4 @@
+config { type: "table", schema: "silver", description: "Tasas tipadas: una fila por fecha y moneda (la vigila la aserción tasa_unica_por_dia)." }
+
+SELECT CAST(fecha AS DATE) AS fecha, UPPER(TRIM(moneda)) AS moneda, CAST(cup_por_unidad AS NUMERIC(12, 2)) AS cup_por_unidad
+FROM ${ref("bronze", "tasas")}

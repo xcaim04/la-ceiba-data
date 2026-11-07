@@ -1,0 +1,6 @@
+config { type: "assertion", description: "El ingreso por canal suma lo mismo que silver." }
+
+SELECT g.total AS gold, s.total AS silver
+FROM (SELECT SUM(ingreso_usd) AS total FROM ${ref("gold", "ingreso_por_canal")}) g,
+     (SELECT SUM(ingreso_usd) AS total FROM ${ref("silver", "ventas")}) s
+WHERE g.total IS DISTINCT FROM s.total
