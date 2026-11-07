@@ -11,6 +11,7 @@ from pathlib import Path
 import duckdb
 
 RAIZ = Path(__file__).parent
+BASE_CSS = (RAIZ / "diseno" / "base.css").read_text(encoding="utf-8")
 MONEDAS = {"CUP": "CUP efectivo", "TRANSFERENCIA": "Transferencia", "USD": "USD", "MLC": "MLC"}
 FUENTES = {"almacen": "Almacén", "pos": "Tienda (POS)", "whatsapp": "WhatsApp"}
 MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto",
@@ -117,7 +118,8 @@ def linea_margen(semanas: list[tuple]) -> str:
 </svg>"""
 
 
-def construir(con: duckdb.DuckDBPyConnection) -> str:
+def construir(con: duckdb.DuckDBPyConnection, acciones: str = "") -> str:
+    """Página completa del panel; `acciones` es HTML extra para la barra (Administrar, Salir) cuando lo sirve la app."""
     ingreso, margen, bajo_costo = con.execute(
         "SELECT sum(ingreso_usd), sum(margen_usd), sum(lineas_bajo_costo) FROM gold.margen_producto_semana"
     ).fetchone()
@@ -186,55 +188,7 @@ def construir(con: duckdb.DuckDBPyConnection) -> str:
 <meta name="color-scheme" content="light dark">
 <title>La Ceiba · Margen real</title>
 <style>
-:root {{
-  --fondo:#f5f5f7; --tarjeta:#ffffff; --tinta:#1d1d1f; --tinta-2:#6e6e73; --separador:rgba(0,0,0,.08);
-  --acento:#0066cc; --senal:#bf4a12; --critico:#c4321f; --critico-fondo:#fdecea; --aviso-fondo:#fff4d6; --bien:#1a7f37;
-  --material:rgba(245,245,247,.72); --sombra:0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.04);
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
-}}
-@media (prefers-color-scheme: dark) {{
-  :root:where(:not([data-theme="light"])) {{
-    --fondo:#000000; --tarjeta:#1c1c1e; --tinta:#f5f5f7; --tinta-2:#a1a1a6; --separador:rgba(255,255,255,.10);
-    --acento:#4da3ff; --senal:#f08a4b; --critico:#ff6b5e; --critico-fondo:#3a1c1a; --aviso-fondo:#3a2f12; --bien:#3fb950;
-    --material:rgba(22,22,23,.72); --sombra:none;
-    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-  }}
-}}
-:root[data-theme="dark"] {{
-  --fondo:#000000; --tarjeta:#1c1c1e; --tinta:#f5f5f7; --tinta-2:#a1a1a6; --separador:rgba(255,255,255,.10);
-  --acento:#4da3ff; --senal:#f08a4b; --critico:#ff6b5e; --critico-fondo:#3a1c1a; --aviso-fondo:#3a2f12; --bien:#3fb950;
-  --material:rgba(22,22,23,.72); --sombra:none;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
-}}
-* {{ box-sizing:border-box; }}
-html {{ scroll-behavior:smooth; scroll-padding-top:72px; -webkit-text-size-adjust:100%; }}
-body {{ margin:0; background:var(--fondo); color:var(--tinta);
-  font:400 1.0625rem/1.47 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
-  -webkit-font-smoothing:antialiased; letter-spacing:-.01em; }}
-.oculto {{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }}
-:focus-visible {{ outline:3px solid var(--acento); outline-offset:3px; border-radius:6px; }}
-
-/* Capa funcional: barra flotante translúcida; el contenido pasa por debajo. */
-.navegacion {{ position:sticky; top:0; z-index:5; background:var(--material); border-bottom:1px solid var(--separador);
-  backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); }}
-.navegacion > div {{ max-width:1080px; margin:0 auto; padding:10px 16px; display:flex; align-items:center; gap:16px; }}
-.marca {{ font-weight:600; font-size:1.0625rem; margin-right:auto; white-space:nowrap; }}
-.segmentos {{ display:flex; gap:2px; padding:2px; border-radius:9px; background:var(--separador); overflow-x:auto; scrollbar-width:none; }}
-.segmentos a {{ color:var(--tinta); text-decoration:none; font-size:.8125rem; font-weight:500; padding:6px 12px; border-radius:7px; white-space:nowrap; min-height:28px; transition:background .2s; }}
-.segmentos a[aria-current="true"] {{ background:var(--tarjeta); box-shadow:0 1px 3px rgba(0,0,0,.12); }}
-@media (prefers-reduced-transparency: reduce) {{ .navegacion {{ background:var(--fondo); backdrop-filter:none; -webkit-backdrop-filter:none; }} }}
-
-main {{ max-width:1080px; margin:0 auto; padding:0 16px 64px; }}
-section {{ padding-top:56px; }}
-.cabecera {{ padding:48px 0 8px; }}
-.ceja {{ color:var(--senal); font-size:.9375rem; font-weight:600; margin:0 0 8px; }}
-h1 {{ font:700 clamp(2rem, 5vw, 3rem)/1.08 -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
-  letter-spacing:-.025em; margin:0; max-width:22ch; text-wrap:balance; }}
-.cabecera p {{ color:var(--tinta-2); font-size:1.1875rem; max-width:40em; margin:14px 0 0; text-wrap:pretty; }}
-h2 {{ font-size:1.75rem; line-height:1.15; letter-spacing:-.02em; margin:0 0 6px; }}
-h3 {{ font-size:1.0625rem; margin:0; }}
-.intro {{ color:var(--tinta-2); margin:0 0 20px; max-width:44em; }}
-.tarjeta {{ background:var(--tarjeta); border-radius:18px; box-shadow:var(--sombra); padding:24px; }}
+{BASE_CSS}
 
 /* Firma: la historia del aceite. */
 .historia {{ margin-top:28px; padding:24px 24px 16px; overflow-x:auto; }}
@@ -302,32 +256,11 @@ h3 {{ font-size:1.0625rem; margin:0; }}
 .crece .barra {{ transform:scaleX(0); }}
 .crece.visible .barra {{ transform:none; transition:transform .7s cubic-bezier(.33,1,.68,1); }}
 
-.tabla {{ margin-top:16px; padding:8px 0; overflow-x:auto; }}
-table.datos {{ border-collapse:collapse; width:100%; font-size:.9375rem; font-variant-numeric:tabular-nums; }}
-.datos th, .datos td {{ padding:10px 16px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--separador); }}
-.datos thead th {{ color:var(--tinta-2); font-weight:500; font-size:.8125rem; }}
-.datos th:first-child {{ text-align:left; padding-left:24px; }} .datos td:last-child, .datos th:last-child {{ padding-right:24px; }}
-.datos tbody th {{ font-weight:500; }}
-.datos tbody tr:last-child th, .datos tbody tr:last-child td {{ border-bottom:0; }}
-.datos td.bajo {{ background:var(--aviso-fondo); }}
-.datos td.neg {{ background:var(--critico-fondo); color:var(--critico); font-weight:600; }}
-.no {{ color:var(--critico); }}
 
-.estado {{ display:flex; gap:16px; align-items:center; }}
-.estado-icono {{ flex:none; width:44px; height:44px; border-radius:50%; display:grid; place-items:center; background:var(--bien); color:#fff; font-size:1.25rem; font-weight:700; }}
-.estado-icono.mal {{ background:var(--critico); }}
-.estado p {{ margin:2px 0 0; color:var(--tinta-2); font-size:.9375rem; }}
-footer {{ color:var(--tinta-2); font-size:.8125rem; padding:40px 0 0; border-top:1px solid var(--separador); margin-top:56px; }}
-
-#tip {{ position:fixed; pointer-events:none; z-index:10; background:var(--tinta); color:var(--fondo); font-size:.8125rem;
-  font-weight:500; padding:8px 12px; border-radius:10px; opacity:0; transition:opacity .15s; max-width:300px; box-shadow:0 8px 24px rgba(0,0,0,.18); }}
 @keyframes dibujar {{ to {{ stroke-dashoffset:0; }} }}
 @keyframes aparecer {{ to {{ opacity:1; }} }}
-@media (max-width:480px) {{ .marca {{ display:none; }} .segmentos {{ margin:0 auto; }} }}
 @media (max-width:560px) {{ .barras li {{ grid-template-columns:1fr 64px; }} .barras .pista {{ grid-column:1 / 3; grid-row:2; }} .barras small {{ grid-column:1 / 3; }} }}
 @media (prefers-reduced-motion: reduce) {{
-  html {{ scroll-behavior:auto; }}
-  *, *::before, *::after {{ animation-duration:0s !important; animation-delay:0s !important; transition-duration:0s !important; }}
   .crece .barra {{ transform:none; }}
 }}
 </style></head><body>
@@ -336,6 +269,7 @@ footer {{ color:var(--tinta-2); font-size:.8125rem; padding:40px 0 0; border-top
   <div class="segmentos">
     <a href="#resumen" aria-current="true">Resumen</a><a href="#ingresos">Ingresos</a><a href="#productos">Productos</a><a href="#calidad">Calidad</a>
   </div>
+  {f'<div class="acciones">{acciones}</div>' if acciones else ''}
 </div></nav>
 <main>
 <section id="resumen" class="cabecera">

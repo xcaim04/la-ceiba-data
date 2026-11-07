@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+{% block titulo %}Administrar · La Ceiba Datos{% endblock %}
+{% block segmentos %}
+<div class="segmentos"><a href="#estado">Estado</a><a href="#cargar">Cargar archivos</a><a href="#catalogo">Catálogo</a></div>
+{% endblock %}
+{% block estilos %}
+.dos { display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap:16px; align-items:start; }
+.dos > * { min-width:0; }
+.fila-form { display:grid; grid-template-columns:1fr 1fr auto; gap:10px; align-items:end; }
+.datos input { min-height:36px; padding:6px 10px; font-size:.9375rem; }
+.datos form { margin:0; }
+.datos td form { display:flex; gap:8px; justify-content:flex-end; }
+.datos code, .ayuda code { font:.8125rem ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap:anywhere; }
+.ayuda { color:var(--tinta-2); font-size:.875rem; margin:12px 0 0; }
+.ayuda summary { cursor:pointer; color:var(--acento); }
+.ayuda li { margin:4px 0; }
+.vacio { color:var(--tinta-2); padding:16px 24px; margin:0; }
+.pendiente { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:12px 24px; border-bottom:1px solid var(--separador); }
+.pendiente:last-child { border-bottom:0; }
+.pendiente b { font-weight:600; } .pendiente small { color:var(--tinta-2); margin-right:auto; }
+.pendiente form { display:flex; gap:8px; flex-wrap:wrap; } .pendiente select { min-height:36px; padding:6px 10px; width:auto; max-width:100%; }
+.lista { list-style:none; margin:0; padding:4px 24px; }
+.lista li { border-bottom:1px solid var(--separador); } .lista li:last-child { border-bottom:0; }
+.producto { display:grid; grid-template-columns:140px 1fr 120px auto; gap:10px; align-items:center; padding:10px 0; }
+.producto code { font:.8125rem ui-monospace, SFMono-Regular, Menlo, monospace; }
+.producto input { min-height:36px; padding:6px 10px; font-size:.9375rem; }
+@media (max-width:640px) { .producto { grid-template-columns:1fr 1fr; } .producto code { grid-column:1 / 3; } .lista, .pendiente { padding-left:16px; padding-right:16px; } }
+@media (max-width:560px) { .fila-form { grid-template-columns:1fr; } }
+{% endblock %}
+{% block contenido %}
+<section id="estado" class="cabecera">
+  <p class="ceja">Administración</p>
+  <h1>Datos de la empresa</h1>
+  <p>Cada carga y cada cambio del catálogo recalcula el panel. Si rompe una prueba de calidad, no se aplica y todo queda como estaba.</p>
+  {% if aviso %}
+  <div class="aviso aviso-flotante {{ aviso.tipo }}" role="{{ 'alert' if aviso.tipo == 'error' else 'status' }}"><div><b>{{ aviso.texto }}</b>
+    {% if aviso.detalle %}<ul>{% for d in aviso.detalle %}<li>{{ d }}</li>{% endfor %}</ul>{% endif %}</div>
+    <button type="button" aria-label="Cerrar aviso" onclick="this.parentElement.remove()">×</button></div>
+  {% endif %}
+  <div class="tarjeta tabla" style="margin-top:24px">
+    {% if conciliacion %}
+    <table class="datos"><caption class="oculto">Conciliación por fuente</caption>
+      <thead><tr><th scope="col">Fuente</th><th scope="col">Filas recibidas</th><th scope="col">Ventas</th><th scope="col">Cuarentena</th><th scope="col">Duplicados</th><th scope="col">Cuadra</th></tr></thead>
+      <tbody>{% for f in conciliacion %}<tr><th scope="row">{{ {"almacen": "Almacén", "pos": "Tienda (POS)", "whatsapp": "WhatsApp"}[f[0]] }}</th>
+        <td>{{ f[1] }}</td><td>{{ f[2] }}</td><td>{{ f[4] }}</td><td>{{ f[5] + f[6] }}</td><td>{{ "Sí" if f[7] else "No" }}</td></tr>{% endfor %}</tbody>
+    </table>
+    {% else %}<p class="vacio">Todavía no hay datos. Carga los cinco archivos para ver el panel.</p>{% endif %}
+  </div>
+</section>
+
+<section id="cargar">
+  <h2>Cargar archivos</h2>
+  <p class="intro">Sube el CSV tal como sale del sistema. Si ya existía uno de ese tipo, se reemplaza y el anterior queda guardado en el historial.</p>
+  <div class="dos">
+    <form class="tarjeta campos" method="post" action="/admin/cargar" enctype="multipart/form-data">
+      <input type="hidden" name="csrf" value="{{ csrf }}">
+      <div><label for="tipo">Tipo de archivo</label>
+        <select id="tipo" name="tipo" required>{% for clave, t in tipos.items() %}<option value="{{ clave }}">{{ t[2] }}</option>{% endfor %}</select></div>
+      <div><label for="mes">Mes (solo para ventas de la tienda)</label><input id="mes" name="mes" type="month"></div>
+      <div><label for="archivo">Archivo CSV (UTF-8, hasta 5 MB)</label><input id="archivo" name="archivo" type="file" accept=".csv,text/csv" required></div>
+      <div><button class="boton" type="submit">Cargar y recalcular</button></div>
+      <details class="ayuda"><summary>Columnas que debe tener cada archivo</summary>
+        <ul>{% for clave, t in tipos.items() %}<li>{{ t[2] }}: <code>{{ t[1] | join(", ") }}</code></li>{% endfor %}</ul></details>
+    </form>
+    <div class="tarjeta tabla" style="margin-top:0">
+      <table class="datos"><caption class="oculto">Archivos cargados</caption>
+        <thead><tr><th scope="col">Archivo</th><th scope="col">Tamaño</th><th scope="col">Modificado</th></tr></thead>
+        <tbody>{% for a in archivos %}<tr><th scope="row"><code>{{ a.nombre }}</code></th><td>{{ a.kb }} KB</td><td>{{ a.modificado }}</td></tr>
+        {% else %}<tr><td colspan="3">Ninguno todavía.</td></tr>{% endfor %}</tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="catalogo">
+  <h2>Catálogo maestro</h2>
+  <p class="intro">Un SKU por producto y todas las formas en que la gente lo escribe. Asignar una forma desconocida saca sus ventas de la cuarentena.</p>
+
+  <h3 style="margin:8px 0 12px">Formas sin asignar</h3>
+  <div class="tarjeta" style="padding:0">
+    {% for texto, n in pendientes %}
+    <div class="pendiente"><b>«{{ texto }}»</b><small>{{ n }} líneas en cuarentena</small>
+      <form method="post" action="/admin/alias"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="alias" value="{{ texto }}">
+        <label class="oculto" for="p{{ loop.index }}">Producto</label>
+        <select id="p{{ loop.index }}" name="sku" required><option value="" disabled selected>Elige el producto…</option>{% for p in productos %}<option value="{{ p.sku }}">{{ p.nombre }}</option>{% endfor %}</select>
+        <button class="boton pequeno" type="submit">Asignar</button></form></div>
+    {% else %}<p class="vacio">No hay formas pendientes: todas las ventas tienen producto.</p>{% endfor %}
+  </div>
+
+  <h3 style="margin:32px 0 12px">Productos</h3>
+  <ul class="tarjeta lista">
+    {% for p in productos %}<li><form class="producto" method="post" action="/admin/producto">
+      <input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="sku" value="{{ p.sku }}">
+      <code>{{ p.sku }}</code>
+      <input name="nombre" value="{{ p.nombre }}" aria-label="Nombre de {{ p.sku }}" required maxlength="80">
+      <input name="unidad" value="{{ p.unidad }}" aria-label="Unidad de {{ p.sku }}" required maxlength="20">
+      <button class="boton pequeno secundario" type="submit">Guardar</button></form></li>{% endfor %}
+  </ul>
+  <form class="tarjeta" method="post" action="/admin/producto" style="margin-top:16px">
+    <h3 style="margin-bottom:14px">Producto nuevo</h3>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="fila-form">
+      <div><label for="n-sku">SKU</label><input id="n-sku" name="sku" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9-]{1,29}" placeholder="MALTA-LATA"></div>
+      <div><label for="n-nombre">Nombre</label><input id="n-nombre" name="nombre" required maxlength="80" placeholder="Malta en lata"></div>
+      <div><label for="n-unidad">Unidad</label><input id="n-unidad" name="unidad" required maxlength="20" placeholder="lata"></div>
+    </div>
+    <p style="margin:14px 0 0"><button class="boton pequeno" type="submit">Añadir producto</button></p>
+  </form>
+
+  <h3 style="margin:32px 0 12px">Formas de escribir cada producto</h3>
+  <div class="tarjeta tabla" style="margin-top:0">
+    <table class="datos"><caption class="oculto">Formas de escribir cada producto</caption>
+      <thead><tr><th scope="col">Forma (normalizada)</th><th scope="col">SKU</th><th scope="col"><span class="oculto">Borrar</span></th></tr></thead>
+      <tbody>{% for a in alias %}<tr><th scope="row">{{ a.alias }}</th><td><code>{{ a.sku }}</code></td>
+        <td><form method="post" action="/admin/alias/borrar"><input type="hidden" name="csrf" value="{{ csrf }}"><input type="hidden" name="alias" value="{{ a.alias }}">
+          <button class="boton pequeno peligro" type="submit" aria-label="Borrar la forma {{ a.alias }}">Borrar</button></form></td></tr>{% endfor %}</tbody>
+    </table>
+  </div>
+  <form class="tarjeta" method="post" action="/admin/alias" style="margin-top:16px">
+    <h3 style="margin-bottom:14px">Forma nueva</h3>
+    <input type="hidden" name="csrf" value="{{ csrf }}">
+    <div class="fila-form">
+      <div><label for="a-alias">Cómo aparece escrito</label><input id="a-alias" name="alias" required maxlength="80" placeholder="pollo de 10"></div>
+      <div><label for="a-sku">Producto</label><select id="a-sku" name="sku" required><option value="" disabled selected>Elige el producto…</option>{% for p in productos %}<option value="{{ p.sku }}">{{ p.nombre }}</option>{% endfor %}</select></div>
+      <div><button class="boton pequeno" type="submit">Añadir</button></div>
+    </div>
+  </form>
+</section>
+<footer>Los archivos anteriores quedan en la carpeta <code>historial/</code> del servidor.</footer>
+{% endblock %}
