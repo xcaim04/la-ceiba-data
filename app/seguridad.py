@@ -31,7 +31,9 @@ def verificar(archivo: Path, usuario: str, clave: str) -> bool:
     datos = json.loads(archivo.read_text())
     calculado = _hash(clave, bytes.fromhex(datos["sal"]))
     # Se comparan las dos cosas siempre, para no revelar por tiempo cuál falló.
-    return hmac.compare_digest(calculado.hex(), datos["hash"]) & hmac.compare_digest(usuario, datos["usuario"])
+    # En bytes: compare_digest no acepta texto con tildes ni ñ.
+    return (hmac.compare_digest(calculado.hex(), datos["hash"])
+            & hmac.compare_digest(usuario.encode(), datos["usuario"].encode()))
 
 
 def secreto_de_sesion(archivo: Path) -> str:
@@ -64,4 +66,4 @@ def token_csrf(sesion: dict) -> str:
 
 
 def csrf_valido(sesion: dict, enviado: str) -> bool:
-    return bool(enviado) and hmac.compare_digest(sesion.get("csrf", ""), enviado)
+    return bool(enviado) and hmac.compare_digest(sesion.get("csrf", "").encode(), enviado.encode())

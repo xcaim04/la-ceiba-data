@@ -8,7 +8,8 @@ WITH pos AS (
 ),
 whatsapp AS (
     -- Formato de pedido: "<cantidad> x <producto> @ <precio> <moneda>". Lo demás es charla.
-    SELECT 'whatsapp' AS fuente, md5(telefono || fecha_hora || mensaje) AS id_origen,
+    -- concat_ws salta los vacíos: un mensaje sin teléfono no se queda sin llave.
+    SELECT 'whatsapp' AS fuente, md5(concat_ws('|', telefono, fecha_hora, mensaje)) AS id_origen,
            CAST(fecha_hora AS TIMESTAMP) AS fecha_hora, cliente,
            nullif(regexp_extract(mensaje, '^\s*(\d+)\s*x\s*(.+?)\s*@\s*([\d.]+)\s*(\w+)\s*$', 2), '') AS producto,
            nullif(regexp_extract(mensaje, '^\s*(\d+)\s*x\s*(.+?)\s*@\s*([\d.]+)\s*(\w+)\s*$', 1), '') AS cantidad,
